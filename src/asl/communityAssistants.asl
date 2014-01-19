@@ -9,21 +9,26 @@
 /* Plans */
 
 +!start <- 
-	?joinWork ;
-	?joinArti(CommId) ;
+	!joinWork ;
+	!joinArti(CommId) ;
 	.print(CommId);
-	follow;
-	//focus(CommId);
-	.print(CommId).
+	focus(CommId);
+	follow (Text) ;
+	.print(Text).
 
 
-+?joinWork: true <- joinWorkspace("CommunityServer",SrvId).
--?joinWork: true <- .wait(10); ?joinWork.
++!joinWork: true <- joinWorkspace("CommunityServer",SrvId).
+-!joinWork: true <- .wait(10); !joinWork.
 	
-+?joinArti(CommId): true <- lookupArtifact("c",CommId).
--?joinArti(CommId): true <- .wait(10); ?joinArti(CommId).
++!joinArti(CommId): true <-  lookupArtifact("c",CommId).
+-!joinArti(CommId): true <- .wait(10); !joinArti(CommId).
+
+
++!createCommunity <-
+	makeArtifact("c","Community",["MAILBOX"],C).
+
 
      
      
      
-+newFollower : ID <- .print(ID) .
++newFollower [artifact_name(Id,"c")] <- .print(ID) .

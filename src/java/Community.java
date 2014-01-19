@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import cartago.AgentId;
 import cartago.Artifact;
 import cartago.OPERATION;
+import cartago.OpFeedbackParam;
 
 public class Community extends Artifact {
 	
@@ -23,7 +24,8 @@ public class Community extends Artifact {
 	}
 	
 	@OPERATION
-	void follow() {
+	void follow(OpFeedbackParam text) {
+		text.set("test");
 		followers.add( getOpUserId() );
 		signal("newFollower", getOpUserId() );
 	}
