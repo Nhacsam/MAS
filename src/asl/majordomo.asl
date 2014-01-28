@@ -5,8 +5,6 @@
  
 !setup_and_monitor.
 
-+!setup_and_monitor : .my_name( Id )
++!setup_and_monitor
 	<- 	createWorkspace("CommunityServer");
-		joinWorkspace("CommunityServer", CommId);
-		makeArtifact("c","Community",["MAILBOX"],C).
-
+		joinWorkspace("CommunityServer", CommId).
