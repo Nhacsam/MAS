@@ -24,29 +24,19 @@ createdCommunity( [] ).
 
 /**
  * Create a new community
- * @param C Return the community id
+ * @param Name Return the community Name
  */
-+!createCommunity( R ) <-
++!createCommunity( Name ) <-
 	.random(Rand);
-	.concat("", Rand, R );
-	makeArtifact(R,"MailBoxCommunity",[],C);
-	
-	.concat("Create ", R, Text );
-	.print( Text );
-	
-	!addnewCommunity( R );
-	.broadcast( tell, newCommunity(R) ).
+	.concat("", Rand, Name );
+	.send( "communityServer", tell, create(Name) ).
 
 /**
  * Follow a community
- * @param C Id of the community to follow
+ * @param Name Name of the community to follow
  */
-+!followCommunity( R ) : .string(R) & communities(Comms) & followedCommunity ( FollowedComms ) <-
-	lookupArtifact( R, Id);
-	follow;
-	
-	.concat("Follow ", R, Text );
-	.print( Text );
++!followCommunity( Name ) : .string(Name) & communities(Comms) & followedCommunity ( FollowedComms ) <-
+	.send( "communityServer", tell, follow(Name) );
 	
 	.concat(FollowedComms, [C], Added );
 	-+followedCommunity( Added );
@@ -64,15 +54,12 @@ createdCommunity( [] ).
 /**
  * Stop following a Community
  */
-+!stopfollowingCommunity( R ) : .string( R ) & communities(Comms) & followedCommunity ( FollowedComms )  <-
++!stopfollowingCommunity( Name ) : .string( Name ) & communities(Comms) & followedCommunity ( FollowedComms )  <-
 	
-	lookupArtifact( R, Id);
-	stopfollow;
+	.send( "communityServer", tell, stopfollowing(Name) );
+	
 	.concat(Comms, [C], Added );
 	-+communities( Added );
-	
-	.concat("Stop follow ", R, Text );
-	.print( Text );
 	
 	.delete( C, FollowedComms, Deleted );
 	-+followedCommunity( Deleted )

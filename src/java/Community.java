@@ -10,18 +10,25 @@ import cartago.OPERATION;
 abstract class Community extends Artifact {
 	
 	
-	protected LinkedList<AgentId> followers ;
+	protected LinkedList<String> followers ;
+	
+	protected AgentId server ;
+	
+	protected String owner ;
 	
 	
 	/**
 	 * Community Initialization
 	 * @param type Community Type
 	 */
-	void init(String type) {
+	void init(String type, String src ) {
 		defineObsProperty("type", type);
 		
-		followers = new LinkedList<AgentId>() ;
-		followers.add( getCreatorId() );
+		followers = new LinkedList<String>() ;
+		followers.add( src );
+		
+		owner = src ;
+		server = getCreatorId() ;
 	}
 	
 	
@@ -30,9 +37,15 @@ abstract class Community extends Artifact {
 	 * Add the agent to the follower and signal to others
 	 */
 	@OPERATION
-	void follow() {
-		followers.add( getOpUserId() );
-		signal("newFollower", getOpUserId().getAgentName() );
+	void follow( String src ) {
+		followers.add( src );
+		
+		ListIterator<String> ite = followers.listIterator(0);
+		while( ite.hasNext() ) {
+			String currname = ite.next();
+			
+			signal(server, "newFollowerArti", src, currname);
+		}
 	}
 	
 	
@@ -41,7 +54,7 @@ abstract class Community extends Artifact {
 	 * Remove the agent to the follower and signal to others
 	 */
 	@OPERATION
-	void stopfollow() {
+	void stopfollow( String src ) {
 		followers.remove( getOpUserId() );
 		signal("followerLeave", getOpUserId().getAgentName() );
 	}
@@ -73,21 +86,21 @@ abstract class Community extends Artifact {
 	 */
 	protected void sendPrivateMessage( AgentId from, String to ) {
 		
-		AgentId toId = findFollowerByName(to );
+		String toId = findFollowerByName(to );
 		signal(toId, "newMessage", from);
 	}
 	
 	/**
 	 * 
 	 */
-	protected AgentId findFollowerByName( String name ) {
+	protected String findFollowerByName( String name ) {
 		
-		ListIterator<AgentId> ite = followers.listIterator(0);
+		ListIterator<String> ite = followers.listIterator(0);
 		while( ite.hasNext() ) {
-			AgentId id = ite.next();
+			String currname = ite.next();
 			
-			if( id.getAgentName() == name )
-				return id ;
+			if( currname == name )
+				return currname ;
 		}
 		return null ;
 	}

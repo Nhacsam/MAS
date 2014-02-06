@@ -6,9 +6,6 @@
 
 /* Initial beliefs and rules */
 
-
-
-
 maxNumberOfFollowedCommunities( 10 ).
 
 
@@ -34,6 +31,8 @@ maxNumberOfFollowedCommunities( 10 ).
 	.random(Rand);
 	.length(F, LF );
 	!agentAction(Rand, LF);
+	
+	//!createCommunity(A);
 	
 	.length(C, LC );
 	.length(F, LF );
@@ -83,6 +82,6 @@ maxNumberOfFollowedCommunities( 10 ).
 /* Events */
 
 
-+newFollower(Name)  <- .concat("New follower ", Name, Text ); .print(Text).
++newFollower(ArtiName, Name)  <- .concat("New follower ", Name, Text ); .print(Text).
 +followerLeave(Name) <- .concat("Follower Leave ", Name, Text ); .print(Text).
 +newCommunity( ComId)[source(S)] <- !addnewCommunity( ComId ) .
