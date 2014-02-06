@@ -1,16 +1,12 @@
 // Agent communityAssistants in project projetmas
 
+
+/* Include the base */
+{ include("assistantBase.asl") }
+
 /* Initial beliefs and rules */
 
-/*
- * non followed existing Community 
- */
-communities( [] ).
 
-/**
- * Comunity followed
- */
-followedCommunity( [] ).
 
 
 maxNumberOfFollowedCommunities( 10 ).
@@ -37,7 +33,7 @@ maxNumberOfFollowedCommunities( 10 ).
 +!handleCommunity : communities( C ) & followedCommunity( F ) <-
 	.random(Rand);
 	.length(F, LF );
-	!agetAction(Rand, LF);
+	!agentAction(Rand, LF);
 	
 	.length(C, LC );
 	.length(F, LF );
@@ -49,117 +45,38 @@ maxNumberOfFollowedCommunities( 10 ).
 
 
 // Follow New Community
-+!agetAction( Rand, LF ) : Rand < 0.3
++!agentAction( Rand, LF ) : Rand < 0.3
 					& maxNumberOfFollowedCommunities( M ) &
 					LF < M <-
 	!getRandomCommunity( Community );
 	!followCommunity( Community ).
 
 // Create a New Community
-+!agetAction( Rand, LF ) : 0.3 < Rand & Rand < 0.35
++!agentAction( Rand, LF ) : 0.3 < Rand & Rand < 0.35
 					& maxNumberOfFollowedCommunities( M )
 					& LF < M <-
 	!createCommunity( Community );
 	!followCommunity( Community ).
 
 // Stop Following a Community
-+!agetAction( Rand, LF ) : 0.4 < Rand & Rand < 0.5  & LF > 0  <-
++!agentAction( Rand, LF ) : 0.4 < Rand & Rand < 0.5  & LF > 0  <-
 	!getRandomCommunity( Community );
 	.concat("Want to delete ", Community, Text );
 	.print( Text );
 	!stopfollowingCommunity( Community ).
 
 // Do Nothing
-+!agetAction( Rand, LF ).
++!agentAction( Rand, LF ).
 
 
 
 
 
 
-
-
-/**
- * Create a new community
- * @param C Return the community id
- */
-+!createCommunity( R ) <-
-	.random(Rand);
-	.concat("", Rand, R );
-	makeArtifact(R,"MailBoxCommunity",[],C);
-	
-	.concat("Create ", R, Text );
-	.print( Text );
-	
-	!addnewCommunity( R );
-	.broadcast( tell, newCommunity(R) ).
-
-/**
- * Follow a community
- * @param C Id of the community to follow
- */
-+!followCommunity( R ) : .string(R) & communities(Comms) & followedCommunity ( FollowedComms ) <-
-	lookupArtifact( R, Id);
-	follow;
-	
-	.concat("Follow ", R, Text );
-	.print( Text );
-	
-	.concat(FollowedComms, [C], Added );
-	-+followedCommunity( Added );
-	
-	.delete( C, Comms, Deleted );
-	-+communities( Deleted )
-.
-
+// Crate a new community if we try de follow a community which not exist
 +!followCommunity( R ) <-
 	!createCommunity( S );
 	!followCommunity( S ).
-
--!followCommunity( R ).
-
-
-/**
- * Strop following a Community
- */
-+!stopfollowingCommunity( R ) : .string( R ) & communities(Comms) & followedCommunity ( FollowedComms )  <-
-	
-	lookupArtifact( R, Id);
-	stopfollow;
-	.concat(Comms, [C], Added );
-	-+communities( Added );
-	
-	.concat("Stop follow ", R, Text );
-	.print( Text );
-	
-	.delete( C, FollowedComms, Deleted );
-	-+followedCommunity( Deleted )
-	.
-+!stopfollowingCommunity( R ).
--!stopfollowingCommunity( R ).
-
-
-
-/**
- * Choose a new random community
- */
-+!getRandomCommunity( Name ) : communities( Comms ) <- 
-	.shuffle(Comms,Result);
-	-+communities( Result );
-	!getFirstCommunity(Name) .
-
-+!getFirstCommunity(S) : communities( [S|L] ).
-+!getFirstCommunity(S) : communities( [] ) <-
-	.print("no community").
-
-
-/**
- * Add new community in belief base
- */
-+!addnewCommunity( ComId) : communities(Comms)<-
-	.concat( [ComId], Comms, Added );
-	-+communities( Added ).
-
 
 
 
