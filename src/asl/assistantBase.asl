@@ -18,6 +18,12 @@ followedCommunity( [] ).
 createdCommunity( [] ).
 
 
+	
+//contains/2
+//contains(L,X) is true if L contains at least one X 
+contains([X|_],X).
+contains([_|L],X):- contains(L,X).
+
 
 /* Plans */
 
@@ -27,8 +33,6 @@ createdCommunity( [] ).
  * @param Name Return the community Name
  */
 +!createCommunity( Name ) <-
-	.random(Rand);
-	.concat("", Rand, Name );
 	.send( "communityServer", tell, create(Name) ).
 
 /**
@@ -88,3 +92,4 @@ createdCommunity( [] ).
 +!addnewCommunity( ComId) : communities(Comms)<-
 	.concat( [ComId], Comms, Added );
 	-+communities( Added ).
+

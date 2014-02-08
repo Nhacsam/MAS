@@ -27,9 +27,11 @@ communities( [] ).
  * @param Name Name of the community to create
  * @param Src Agent who want to create the community
  */
-+!createCommunity( Name, Src ) : .string(Name) <-
++!createCommunity( Name, Src ) : .string(Name)  <-
 	makeArtifact(Name ,"MailBoxCommunity",[ Src ],C);
-	//focus(C);
+	
+	focus( C );
+	
 	.concat("Create ", Name, Text );
 	.print( Text );
 	
@@ -51,10 +53,7 @@ communities( [] ).
  */
 +!followCommunity( Name, Src ) <-
 	lookupArtifact( Name, Id);
-	follow(Src);
-	
-	.concat("Follow ", Name, Text );
-	.print( Text )
+	follow(Src) [artifact_name(Name)]
 .
 
 -!followCommunity( R ).
@@ -71,10 +70,7 @@ communities( [] ).
 +!stopfollowingCommunity( Name, Src ) <-
 	
 	lookupArtifact( Name, Id);
-	stopfollow(Src);
-	
-	.concat("Stop Following ", Name, Text );
-	.print( Text ).
+	stopfollow(Src) [artifact_name(Name)].
 
 +!stopfollowingCommunity( R ).
 -!stopfollowingCommunity( R ).
@@ -107,7 +103,8 @@ communities( [] ).
 ///// Messages From the artifacts /////
 ///////////////////////////////////////
 
-+newFollowerArti( Name, To )[source(Arti)] <- .print(Arti); !newFollowerMsg(Arti, Name, To).
++newFollowerArti( Name, To)[ artifact_name(Id, Arti) ] <- !newFollowerMsg(Arti, Name, To).
+
 
 	
 ///////////////
