@@ -17,6 +17,8 @@ maxNumberOfFollowedCommunities( 10 ).
 
 +!start : .my_name(Name) <- 
 	!joinWork ;
+	makeArtifact(Name ,"CommAssistantGUIWrapperNico",[],C);
+	focus(C);
 	!handleCommunity.
 
 
@@ -39,7 +41,7 @@ maxNumberOfFollowedCommunities( 10 ).
 	.concat( "Community knowed : ", LC, "  Communities Followed : ", LF, Text);
 	.print(Text);
 	
-	.wait(100);
+	.wait(10000);
 	!handleCommunity.
 
 
@@ -54,6 +56,8 @@ maxNumberOfFollowedCommunities( 10 ).
 +!agentAction( Rand, LF ) : 0.3 < Rand & Rand < 0.35
 					& maxNumberOfFollowedCommunities( M )
 					& LF < M <-
+	.random(RandName);
+	.concat("", RandName, Community );
 	!createCommunity( Community );
 	!followCommunity( Community ).
 

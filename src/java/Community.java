@@ -10,11 +10,11 @@ import cartago.OPERATION;
 abstract class Community extends Artifact {
 	
 	
-	protected LinkedList<String> followers ;
+	protected LinkedList<String> m_followers ;
 	
-	protected AgentId server ;
+	protected AgentId m_server ;
 	
-	protected String owner ;
+	protected String m_owner ;
 	
 	
 	/**
@@ -24,11 +24,11 @@ abstract class Community extends Artifact {
 	void init(String type, String src ) {
 		defineObsProperty("type", type);
 		
-		followers = new LinkedList<String>() ;
-		followers.add( src );
+		m_followers = new LinkedList<String>() ;
+		m_followers.add( src );
 		
-		owner = src ;
-		server = getCreatorId() ;
+		m_owner = src ;
+		m_server = getCreatorId() ;
 	}
 	
 	
@@ -38,13 +38,13 @@ abstract class Community extends Artifact {
 	 */
 	@OPERATION
 	void follow( String src ) {
-		followers.add( src );
+		m_followers.add( src );
 		
-		ListIterator<String> ite = followers.listIterator(0);
+		ListIterator<String> ite = m_followers.listIterator(0);
 		while( ite.hasNext() ) {
 			String currname = ite.next();
 			
-			signal(server, "newFollowerArti", src, currname);
+			signal("newFollowerArti", src, currname );
 		}
 	}
 	
@@ -55,8 +55,8 @@ abstract class Community extends Artifact {
 	 */
 	@OPERATION
 	void stopfollow( String src ) {
-		followers.remove( getOpUserId() );
-		signal("followerLeave", getOpUserId().getAgentName() );
+		m_followers.remove( getOpUserId() );
+		signal("followerLeaveArti", getOpUserId().getAgentName() );
 	}
 	
 	
@@ -95,7 +95,7 @@ abstract class Community extends Artifact {
 	 */
 	protected String findFollowerByName( String name ) {
 		
-		ListIterator<String> ite = followers.listIterator(0);
+		ListIterator<String> ite = m_followers.listIterator(0);
 		while( ite.hasNext() ) {
 			String currname = ite.next();
 			
