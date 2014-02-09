@@ -1,0 +1,5 @@
+client/.*
+serveur/.*
+client/bin
+serveur/bin
+
