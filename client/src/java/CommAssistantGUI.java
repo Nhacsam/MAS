@@ -1,10 +1,12 @@
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.event.ActionListener;
 import java.security.InvalidParameterException;
 import java.util.LinkedList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -23,7 +25,7 @@ import javax.swing.tree.DefaultTreeModel;
  * @author nikkidbz
  *
  */
-public class CommAssistantGUINico extends JFrame implements TreeSelectionListener {
+public class CommAssistantGUI extends JFrame implements TreeSelectionListener {
 	
 	/**
 	 * @var nickname Nickname field
@@ -40,6 +42,11 @@ public class CommAssistantGUINico extends JFrame implements TreeSelectionListene
 	 * @var toCreate Field for creating a new community
 	 */
 	public JTextField toCreate ;
+	
+	/**
+	 * @var createType Allow to chose the type of community to create
+	 */
+	public JComboBox<String> createType ;
 	
 	/**
 	 * @var nicknameOK Button to save the new community
@@ -73,7 +80,7 @@ public class CommAssistantGUINico extends JFrame implements TreeSelectionListene
 	public JTree communityTree ;
 	
 	
-	public CommAssistantGUINico (String title ) {
+	public CommAssistantGUI (String title, ActionListener listener) {
 		setTitle(title);
 		setSize(800,600);
 		
@@ -95,6 +102,7 @@ public class CommAssistantGUINico extends JFrame implements TreeSelectionListene
 		nicknamePanel.add(nickname);
 		
 		nicknameOk = new JButton("Ok");
+		nicknameOk.addActionListener(listener);
 		nicknamePanel.add(nicknameOk);
 		
 		topPanel.add(nicknamePanel);
@@ -106,7 +114,12 @@ public class CommAssistantGUINico extends JFrame implements TreeSelectionListene
 		toCreate = new JTextField(10);
 		createPanel.add(toCreate);
 		
+		String[] Types = { "ForumComm", "MailComm" };
+		createType = new JComboBox<String>(Types);
+		createPanel.add(createType);
+		
 		toCreateOk = new JButton("Create");
+		toCreateOk.addActionListener(listener);
 		createPanel.add(toCreateOk);
 		
 		topPanel.add(createPanel);
@@ -147,7 +160,7 @@ public class CommAssistantGUINico extends JFrame implements TreeSelectionListene
 	 * @param Name Name of the new community
 	 * @return this
 	 */
-	public CommAssistantGUINico addCommunity( String Name, String Type ) {
+	public CommAssistantGUI addCommunity( String Name, String Type ) {
 		
 		CommunityGUI newComm = new CommunityGUI( Name, Type ) ;
 		communitiesList.add( newComm ) ;
@@ -169,7 +182,7 @@ public class CommAssistantGUINico extends JFrame implements TreeSelectionListene
 	 * @param Name Name the community which is now followed
 	 * @return this
 	 */
-	public CommAssistantGUINico followCommunity( String Name ) {
+	public CommAssistantGUI followCommunity( String Name ) {
 		int commIndex = communitiesList.indexOf( new CommunityGUI( Name ) ) ;
 		
 		if( commIndex != -1 ) {
@@ -196,7 +209,7 @@ public class CommAssistantGUINico extends JFrame implements TreeSelectionListene
 	 * @param Name Name the community which has been deleted
 	 * @return this
 	 */
-	public CommAssistantGUINico removeCommunity( String Name ) {
+	public CommAssistantGUI removeCommunity( String Name ) {
 		int commIndex = communitiesList.indexOf( new CommunityGUI( Name ) ) ;
 		
 		if( commIndex != -1 ) {
@@ -220,7 +233,7 @@ public class CommAssistantGUINico extends JFrame implements TreeSelectionListene
 	 * @param Name Name the community which is not followed any more
 	 * @return this
 	 */
-	public CommAssistantGUINico stopFollowingCommunity( String Name ) {
+	public CommAssistantGUI stopFollowingCommunity( String Name ) {
 		int commIndex = communitiesList.indexOf( new CommunityGUI( Name ) ) ;
 		
 		if( commIndex != -1 ) {

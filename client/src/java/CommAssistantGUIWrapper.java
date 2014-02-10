@@ -1,13 +1,17 @@
 // CArtAgO artifact code for project projetmas
 
-import cartago.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class CommAssistantGUIWrapperNico extends Artifact {
+import cartago.Artifact;
+import cartago.OPERATION;
+
+public class CommAssistantGUIWrapper extends Artifact implements ActionListener {
 	
-	private CommAssistantGUINico m_GUI ;
+	private CommAssistantGUI m_GUI ;
 	
 	void init() {
-		m_GUI = new CommAssistantGUINico("Community Assistant");
+		m_GUI = new CommAssistantGUI("Community Assistant", this);
 		m_GUI.setVisible(true);
 	}
 	
@@ -31,6 +35,29 @@ public class CommAssistantGUIWrapperNico extends Artifact {
 	public void stopFollowingCommunityGUI( String comm ) {
 		m_GUI.stopFollowingCommunity(comm);
 	}
+	
+	public void actionPerformed(ActionEvent e) { 
+		
+		Object obj = e.getSource() ;
+		
+		if( obj == m_GUI.nicknameOk) {
+			String nick = m_GUI.nickname.getText() ;
+			signal( "gui", "nick", nick );
+			
+		} else if ( obj == m_GUI.toCreateOk) {
+			
+			String name = m_GUI.toCreate.getText() ;
+			String type = (String) m_GUI.createType.getSelectedItem() ;
+			type = "community.arts." + type ;
+			
+			try {
+				signal( "gui", "create", name, type );
+			} catch (IllegalMonitorStateException ex ) {}
+		}
+		
+		
+	}
+	
 	
 }
 

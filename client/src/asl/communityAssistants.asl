@@ -15,12 +15,12 @@ maxNumberOfFollowedCommunities( 10 ).
 /* Plans */
 
 +!start : .my_name(Name) <- 
-	makeArtifact(Name ,"CommAssistantGUIWrapperNico",[],C);
+	makeArtifact(Name ,"CommAssistantGUIWrapper",[],C);
 	+guiId( C );
 	focus(C);
 	
-	!joinWork ;
-	!handleCommunity.
+	!joinWork 
+	.//!handleCommunity.
 
 
 +!joinWork: true <- joinRemoteWorkspace("server","localhost",WspID2).
@@ -87,6 +87,9 @@ maxNumberOfFollowedCommunities( 10 ).
 
 
 /* Events */
+
++gui( "create", Name, Type ) <- !createCommunity( Name, Type ).
+
 
 
 +newFollower(ArtiName, Name)  <- .concat("New follower ", Name, Text ); .print(Text).
