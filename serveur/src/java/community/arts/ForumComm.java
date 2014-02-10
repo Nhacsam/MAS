@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.ListIterator;
 
 import cartago.OPERATION;
+import cartago.OpFeedbackParam;
 
 public class ForumComm extends Community{
 	
@@ -38,17 +39,17 @@ public class ForumComm extends Community{
 		}
 	}
 	
-	@OPERATION String readNewsBy2(String agentName){
+	@OPERATION void readNewsBy2(String agentName, OpFeedbackParam<String> result){
 		ListIterator<ArrayList<String>> ite = news.listIterator(0);
 		ArrayList<String> cur;
-		String result;
-		result = "List of "+agentName+" posts :\n";
+		String temp;
+		temp = "List of "+agentName+" posts :\n";
 		while( ite.hasNext() ) {
 			cur = ite.next();
 			if(cur.contains(agentName))
-				result= cur.get(1) + "\n";
+				temp= cur.get(1) + "\n";
 		}
-		return result;
+		result.set(temp);
 	}
 	
 	@OPERATION void readAllNews(){
@@ -60,15 +61,15 @@ public class ForumComm extends Community{
 		}
 	}
 	
-	@OPERATION String readAllNews2(){
+	@OPERATION void readAllNews2(OpFeedbackParam<String> result){
 		ListIterator<ArrayList<String>> ite = news.listIterator(0);
 		ArrayList<String> cur;
-		String result = "";
+		String temp = "";
 		while( ite.hasNext() ) {
 			cur = ite.next();
-			result += cur.get(0) +" posted : "+ cur.get(1)+ "\n";
+			temp += cur.get(0) +" posted : "+ cur.get(1)+ "\n";
 		}
-		return result;
+		result.set(temp);
 	}
 	
 }
