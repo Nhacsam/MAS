@@ -14,7 +14,8 @@ communities( [] ).
 /* Initial goals */
 !setup_and_monitor.
 +!setup_and_monitor
-	<- 	 joinWorkspace("CommunityServer",SrvId).
+	<- 	 	createWorkspace("CommunityServer");
+			joinWorkspace("CommunityServer", CommId).
 
 
 /* Functions */
