@@ -1,6 +1,7 @@
 package community.arts;
 
 import java.util.LinkedList;
+import java.util.ListIterator;
 
 import cartago.AgentId;
 import cartago.Artifact;
@@ -53,6 +54,8 @@ abstract class Community extends Artifact {
 		
 		if(!m_followers.contains(src))
 			m_followers.add( src );
+		
+		signal( "arti", "newFollower", src );
 	}
 	
 	
@@ -64,22 +67,72 @@ abstract class Community extends Artifact {
 	@OPERATION void stopfollow() {
 		AgentId src = this.getOpUserId() ;
 		
-		if (src == m_owner){
-			if(m_followers.size() == 1){
-				m_followers.remove(src);
-				deleteComm(owner);
-			}
-		}
-		else {
+		if (src == m_owner)
+			deleteComm(owner);
+		else
 			m_followers.remove(src);
-		}
 	}
+	
+	
 	
 	@OPERATION void deleteComm( String src ) {
 		if (src == owner){
 			followers.clear();
 		}
+		
+		signal( "arti", "willBeDeleted" );
 	}
+	
+	
+	
+	/**
+	 * Send a public message for all agent who focused the Community Artifact
+	 * @param from Agent who sent the message
+	 */
+	protected void sendPublicMessage( AgentId from ) {
+		signal("arti", "newMessage", from);
+	}
+	
+	/**
+	 * Send a private mesage for an other Agent
+	 * @param from Agent who sent the message
+	 * @param to Agent who will received the message
+	 */
+	protected void sendPrivateMessage( AgentId from, AgentId to ) {
+		signal(to, "arti", "newMessage", from);
+	}
+	
+	/**
+	 * Send a private mesage for an other Agent
+	 * @param from Agent who sent the message
+	 * @param to Agent who will received the message
+	 */
+	protected void sendPrivateMessage( AgentId from, String to ) {
+		
+		AgentId toId = findFollowerByName(to );
+		signal(toId, "arti", "newMessage", from);
+	}
+	
+	/**
+	 * Find a follower
+	 * @param name Name of the follower to find
+	 * @return Id of the agent
+	 */
+	protected AgentId findFollowerByName( String name ) {
+		
+		ListIterator<AgentId> ite = m_followers.listIterator(0);
+		while( ite.hasNext() ) {
+			AgentId currname = ite.next();
+			
+			if( currname.getAgentName() == name )
+				return currname ;
+		}
+		return null ;
+	}
+	
+	
+	
+	
 	
 	
 	
