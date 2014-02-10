@@ -15,7 +15,7 @@ maxNumberOfFollowedCommunities( 10 ).
 /* Plans */
 
 +!start : .my_name(Name) <- 
-	makeArtifact(Name ,"CommAssistantGUIWrapperNico",[],C);
+	makeArtifact(Name ,"CommAssistantGUIWrapper",[],C);
 	+guiId( C );
 	focus(C);
 	

@@ -23,7 +23,7 @@ import javax.swing.tree.DefaultTreeModel;
  * @author nikkidbz
  *
  */
-public class CommAssistantGUINico extends JFrame implements TreeSelectionListener {
+public class CommAssistantGUI extends JFrame implements TreeSelectionListener {
 	
 	/**
 	 * @var nickname Nickname field
@@ -73,7 +73,7 @@ public class CommAssistantGUINico extends JFrame implements TreeSelectionListene
 	public JTree communityTree ;
 	
 	
-	public CommAssistantGUINico (String title ) {
+	public CommAssistantGUI (String title ) {
 		setTitle(title);
 		setSize(800,600);
 		
@@ -147,7 +147,7 @@ public class CommAssistantGUINico extends JFrame implements TreeSelectionListene
 	 * @param Name Name of the new community
 	 * @return this
 	 */
-	public CommAssistantGUINico addCommunity( String Name, String Type ) {
+	public CommAssistantGUI addCommunity( String Name, String Type ) {
 		
 		CommunityGUI newComm = new CommunityGUI( Name, Type ) ;
 		communitiesList.add( newComm ) ;
@@ -169,7 +169,7 @@ public class CommAssistantGUINico extends JFrame implements TreeSelectionListene
 	 * @param Name Name the community which is now followed
 	 * @return this
 	 */
-	public CommAssistantGUINico followCommunity( String Name ) {
+	public CommAssistantGUI followCommunity( String Name ) {
 		int commIndex = communitiesList.indexOf( new CommunityGUI( Name ) ) ;
 		
 		if( commIndex != -1 ) {
@@ -196,7 +196,7 @@ public class CommAssistantGUINico extends JFrame implements TreeSelectionListene
 	 * @param Name Name the community which has been deleted
 	 * @return this
 	 */
-	public CommAssistantGUINico removeCommunity( String Name ) {
+	public CommAssistantGUI removeCommunity( String Name ) {
 		int commIndex = communitiesList.indexOf( new CommunityGUI( Name ) ) ;
 		
 		if( commIndex != -1 ) {
@@ -220,7 +220,7 @@ public class CommAssistantGUINico extends JFrame implements TreeSelectionListene
 	 * @param Name Name the community which is not followed any more
 	 * @return this
 	 */
-	public CommAssistantGUINico stopFollowingCommunity( String Name ) {
+	public CommAssistantGUI stopFollowingCommunity( String Name ) {
 		int commIndex = communitiesList.indexOf( new CommunityGUI( Name ) ) ;
 		
 		if( commIndex != -1 ) {

@@ -36,7 +36,7 @@ abstract class Community extends Artifact {
 		
 		m_type = type ;
 		m_owner =  getCreatorId() ;
-		
+//		m_owner =  getOpUserId() ;
 		m_followers = new LinkedList<AgentId>() ;
 		m_followers.add( m_owner );
 		

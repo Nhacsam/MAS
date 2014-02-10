@@ -2,12 +2,12 @@
 
 import cartago.*;
 
-public class CommAssistantGUIWrapperNico extends Artifact {
+public class CommAssistantGUIWrapper extends Artifact {
 	
-	private CommAssistantGUINico m_GUI ;
+	private CommAssistantGUI m_GUI ;
 	
 	void init() {
-		m_GUI = new CommAssistantGUINico("Community Assistant");
+		m_GUI = new CommAssistantGUI("Community Assistant");
 		m_GUI.setVisible(true);
 	}
 	
