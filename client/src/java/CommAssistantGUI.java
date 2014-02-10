@@ -1,10 +1,13 @@
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.event.ActionListener;
 import java.security.InvalidParameterException;
+import java.util.Hashtable;
 import java.util.LinkedList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -42,6 +45,11 @@ public class CommAssistantGUI extends JFrame implements TreeSelectionListener {
 	public JTextField toCreate ;
 	
 	/**
+	 * @var createType Allow to chose the type of community to create
+	 */
+	public JComboBox<String> createType ;
+	
+	/**
 	 * @var nicknameOK Button to save the new community
 	 */
 	public JButton toCreateOk ;
@@ -50,14 +58,14 @@ public class CommAssistantGUI extends JFrame implements TreeSelectionListener {
 	/**
 	 * @var contentPanel Panel which include the tree and the community Content  
 	 */
-	public JPanel communityPanel ;
+	private JPanel communityPanel ;
 	
 	
 	/**
 	 * @var knowedCommNode Tree node which include the knew and not followed communities
 	 * @var followedCommNode Tree node which include the followed communities
 	 */
-	public DefaultMutableTreeNode knowedCommNode, followedCommNode ;
+	private DefaultMutableTreeNode knowedCommNode, followedCommNode ;
 	
 	/**
 	 * @var communitiesList List of knew communities
@@ -73,7 +81,13 @@ public class CommAssistantGUI extends JFrame implements TreeSelectionListener {
 	public JTree communityTree ;
 	
 	
-	public CommAssistantGUI (String title ) {
+	private Hashtable<String, String > nickNameTable ;
+	
+	
+	public CommAssistantGUI (String title, ActionListener listener) {
+		
+		nickNameTable = new Hashtable<String, String >();
+		
 		setTitle(title);
 		setSize(800,600);
 		
@@ -95,6 +109,7 @@ public class CommAssistantGUI extends JFrame implements TreeSelectionListener {
 		nicknamePanel.add(nickname);
 		
 		nicknameOk = new JButton("Ok");
+		nicknameOk.addActionListener(listener);
 		nicknamePanel.add(nicknameOk);
 		
 		topPanel.add(nicknamePanel);
@@ -106,7 +121,12 @@ public class CommAssistantGUI extends JFrame implements TreeSelectionListener {
 		toCreate = new JTextField(10);
 		createPanel.add(toCreate);
 		
+		String[] Types = { "ForumComm", "MailComm" };
+		createType = new JComboBox<String>(Types);
+		createPanel.add(createType);
+		
 		toCreateOk = new JButton("Create");
+		toCreateOk.addActionListener(listener);
 		createPanel.add(toCreateOk);
 		
 		topPanel.add(createPanel);
@@ -269,8 +289,12 @@ public class CommAssistantGUI extends JFrame implements TreeSelectionListener {
 	}
 	
 	
-	
-	
+	/**
+	 * Save a new NickName
+	 */
+	public void addNickname( String Nick, String Name  ){
+		nickNameTable.put(Name, Nick) ;
+	}
 	
 	
 	

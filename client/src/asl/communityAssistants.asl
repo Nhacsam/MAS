@@ -19,8 +19,8 @@ maxNumberOfFollowedCommunities( 10 ).
 	+guiId( C );
 	focus(C);
 	
-	!joinWork ;
-	!handleCommunity.
+	!joinWork 
+	.//!handleCommunity.
 
 
 +!joinWork: true <- joinRemoteWorkspace("server","localhost",WspID2).
@@ -87,6 +87,11 @@ maxNumberOfFollowedCommunities( 10 ).
 
 
 /* Events */
+
++gui( "create", Name, Type ) <- !createCommunity( Name, Type ).
+
++gui( "nick", Nick) : my_name(Name) <- .broadcast( tell, nickname(Nick, Name) ).
++nickname(Nick, Name) : guiId( GUIID) <- addNicknameGUI( Nick, Name ) [ artifact_id( GUIID )].
 
 
 +newFollower(ArtiName, Name)  <- .concat("New follower ", Name, Text ); .print(Text).
