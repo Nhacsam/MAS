@@ -6,6 +6,7 @@ import java.util.ListIterator;
 import cartago.AgentId;
 import cartago.Artifact;
 import cartago.OPERATION;
+import cartago.OpFeedbackParam;
 
 //CArtAgO artifact code for project projetmas
 
@@ -68,8 +69,10 @@ abstract class Community extends Artifact {
 	}
 	
 	
-	
-	@OPERATION void deleteComm( ) {
+	/**
+	 * Signal that the community will be deleted
+	 */
+	@OPERATION void deleteComm() {
 		
 		AgentId src = this.getOpUserId() ;
 		
@@ -79,6 +82,17 @@ abstract class Community extends Artifact {
 		
 		signal( "arti", "willBeDeleted" );
 	}
+	
+	
+	/**
+	 * Get the type of the community
+	 * @param type Return the Type of the community
+	 */
+	@OPERATION void getType( OpFeedbackParam<String> type ) {
+		type.set(m_type);
+	}
+	
+	
 	
 	
 	
