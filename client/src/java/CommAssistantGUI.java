@@ -2,6 +2,7 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.event.ActionListener;
 import java.security.InvalidParameterException;
+import java.util.Hashtable;
 import java.util.LinkedList;
 
 import javax.swing.BoxLayout;
@@ -57,14 +58,14 @@ public class CommAssistantGUI extends JFrame implements TreeSelectionListener {
 	/**
 	 * @var contentPanel Panel which include the tree and the community Content  
 	 */
-	public JPanel communityPanel ;
+	private JPanel communityPanel ;
 	
 	
 	/**
 	 * @var knowedCommNode Tree node which include the knew and not followed communities
 	 * @var followedCommNode Tree node which include the followed communities
 	 */
-	public DefaultMutableTreeNode knowedCommNode, followedCommNode ;
+	private DefaultMutableTreeNode knowedCommNode, followedCommNode ;
 	
 	/**
 	 * @var communitiesList List of knew communities
@@ -80,7 +81,13 @@ public class CommAssistantGUI extends JFrame implements TreeSelectionListener {
 	public JTree communityTree ;
 	
 	
+	private Hashtable<String, String > nickNameTable ;
+	
+	
 	public CommAssistantGUI (String title, ActionListener listener) {
+		
+		nickNameTable = new Hashtable<String, String >();
+		
 		setTitle(title);
 		setSize(800,600);
 		
@@ -282,8 +289,12 @@ public class CommAssistantGUI extends JFrame implements TreeSelectionListener {
 	}
 	
 	
-	
-	
+	/**
+	 * Save a new NickName
+	 */
+	public void addNickname( String Nick, String Name  ){
+		nickNameTable.put(Name, Nick) ;
+	}
 	
 	
 	

@@ -36,6 +36,13 @@ public class CommAssistantGUIWrapper extends Artifact implements ActionListener 
 		m_GUI.stopFollowingCommunity(comm);
 	}
 	
+	@OPERATION
+	public void addNicknameGUI( String Nick, String Name ) {
+		m_GUI.addNickname(Nick, Name);
+	}
+	
+	
+	
 	public void actionPerformed(ActionEvent e) { 
 		
 		Object obj = e.getSource() ;
