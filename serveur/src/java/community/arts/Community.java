@@ -2,12 +2,18 @@ package community.arts;
 
 import java.util.LinkedList;
 
+import cartago.AgentId;
 import cartago.Artifact;
 import cartago.OPERATION;
 
 //CArtAgO artifact code for project projetmas
-// hello
 
+
+/**
+ * Abstract class for all the communities
+ * @author nikkidbz
+ *
+ */
 abstract class Community extends Artifact {
 	
 	protected int commId;
@@ -16,9 +22,26 @@ abstract class Community extends Artifact {
 	protected String name ;
 	static int counter=0;
 	
+	protected LinkedList<String> m_followers ;
 	
-	void init() {
-		System.out.println("Community Server Ready");
+	protected AgentId m_server ;
+	
+	protected String m_owner ;
+	
+	protected String m_type ;
+	
+	/**
+	 * Community Initialization
+	 * @param type Community Type
+	 */
+	void init(String type, String src ) {
+		
+		m_type = type ;
+		m_followers = new LinkedList<String>() ;
+		m_followers.add( src );
+		
+		m_owner = src ;
+		m_server = getCreatorId() ;
 	}
 	
 	
