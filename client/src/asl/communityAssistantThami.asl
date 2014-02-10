@@ -22,7 +22,7 @@ maxNumberOfFollowedCommunities( 10 ).
 	!handleCommunity.
 
 
-+!joinWork: true <- joinWorkspace("CommunityServer",SrvId).
++!joinWork: true <- joinRemoteWorkspace("Server",SrvId).
 -!joinWork: true <- .wait(10); !joinWork.
 
 

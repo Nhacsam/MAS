@@ -28,7 +28,7 @@ abstract class Community extends Artifact {
 		m_followers.add( src );
 		
 		m_owner = src ;
-		m_server = getCreatorId() ;
+		m_server = this.getOpUserId();
 	}
 	
 	
