@@ -10,23 +10,14 @@ public class ForumComm extends Community{
 	
 	protected LinkedList<ArrayList<String>> news;
 	
-	void init(String c_name, String agentName) {
+	void init() {
+		super.init( "ForumComm" );
 		System.out.println("Forum Community Server Ready");
-		createCommunity(c_name, agentName);
 	}
-	
-	@OPERATION void createCommunity(String c_name, String agentName){
-		setOwner(agentName);
-		setName(c_name);
-		commId=counter++;
-		follow();
-		System.out.println(agentName+" created the community "+c_name+":"+commId+ " as a ForumCommunity");
-	}
-		
 	
 	@OPERATION void post(String new_post){
 		String agentName = this.getOpUserName();
-		if(followers.contains(agentName)){
+		if(m_followers.contains(agentName)){
 			ArrayList<String> new_entry = new ArrayList<String>();		
 			new_entry.add(agentName);
 			new_entry.add(new_post);

@@ -17,12 +17,6 @@ import cartago.OPERATION;
  */
 abstract class Community extends Artifact {
 	
-	protected int commId;
-	protected LinkedList<String> followers ;
-	protected String owner ;
-	protected String name ;
-	static int counter=0;
-	
 	protected LinkedList<AgentId> m_followers ;
 	
 	protected AgentId m_owner ;
@@ -68,16 +62,19 @@ abstract class Community extends Artifact {
 		AgentId src = this.getOpUserId() ;
 		
 		if (src == m_owner)
-			deleteComm(owner);
+			deleteComm();
 		else
 			m_followers.remove(src);
 	}
 	
 	
 	
-	@OPERATION void deleteComm( String src ) {
-		if (src == owner){
-			followers.clear();
+	@OPERATION void deleteComm( ) {
+		
+		AgentId src = this.getOpUserId() ;
+		
+		if (src == m_owner){
+			m_followers.clear();
 		}
 		
 		signal( "arti", "willBeDeleted" );
@@ -128,54 +125,6 @@ abstract class Community extends Artifact {
 				return currname ;
 		}
 		return null ;
-	}
-	
-	
-	
-	
-	
-	
-	
-	public int getCommId(){
-		return commId;
-	}
-	
-
-	public LinkedList<String> getFollowers() {
-		return followers;
-	}
-	
-	public String listFollowers(){
-		return followers.toString();
-	}
-	
-	public int numberFollowers(){
-		return followers.size();
-	}
-
-
-	public String getOwner() {
-		return owner;
-	}
-
-
-	public void setOwner(String owner) {
-		this.owner = owner;
-	}
-
-
-	public String getName() {
-		return name;
-	}
-
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	
-	public static int getCounter() {
-		return counter;
 	}
 	
 
