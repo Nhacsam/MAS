@@ -139,8 +139,14 @@ public class CommunityGUI extends JPanel  implements ActionListener {
 		PostMessage = new JTextField(30);
 		forumPanel.add(PostMessage);
 		
-		PostMessageOk = new JButton("Post");
-		forumPanel.add(PostMessageOk);
+		
+		PostMessageOk = new JButton( "Post") ;
+		PostMessageOk.addActionListener(this);
+		forumPanel.add( PostMessageOk ) ;
+		
+		followButton = new JButton( "Follow/UnFollow") ;
+		followButton.addActionListener(this);
+		globalPanel.add( followButton ) ;
 		
 		forumPanel.add(PreviousMessages);
 		
@@ -215,17 +221,8 @@ public class CommunityGUI extends JPanel  implements ActionListener {
 	
 	
 	public void addForumMessage(String from, String msg) {
-		
-		
-//		JLabel fromLabel = new JLabel( "Message from " + from );
-//		fromLabel.setForeground(new Color( 255, 0, 0));
-//		PreviousMessages.add( fromLabel ) ;
-//		
-//		JLabel message = new JLabel(msg );
-//		
-//		JScrollPane messagePannel = new JScrollPane( message );
-//		messagePannel.setPreferredSize(new Dimension(500, 150) );
-//		PreviousMessages.add( messagePannel ) ;
+		JLabel postLabel = new JLabel( "Posted by" + from + ":" + msg );
+		forumPanel.add( postLabel );
 		
 	}
 	
