@@ -1,4 +1,4 @@
-MAS serveur {
+MAS projetmasbis_env {
 
 	environment: c4jason.CartagoEnvironment("infrastructure")
 

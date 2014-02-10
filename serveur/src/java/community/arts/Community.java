@@ -38,13 +38,23 @@ abstract class Community extends Artifact {
 	 */
 	@OPERATION void stopfollow( String src ) {
 		if (src == owner){
-			if(followers.size() == 1)
+			if(followers.size() == 1){
 				followers.remove(src);
+				deleteComm(owner);
+			}
 		}
 		else {
 			followers.remove(src);
 		}
 	}
+	
+	@OPERATION void deleteComm( String src ) {
+		if (src == owner){
+			followers.clear();
+		}
+	}
+	
+	
 	
 	public int getCommId(){
 		return commId;

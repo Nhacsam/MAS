@@ -1,11 +1,10 @@
 /**
- *  Agent communityServer in project projetmas
+ *  Agent communityManager in project projetmas
  * 
- * Handle th ecreation, the deletion and the index and the following
+ * Handle the creation, the deletion and the index and the following
  * of each community
  */
 
-/* Initial beliefs and rules */
 
 /**
  * Community list of the server
@@ -15,25 +14,23 @@ communities( [] ).
 /* Initial goals */
 !setup_and_monitor.
 +!setup_and_monitor
-	<- 	createWorkspace("CommunityServer");
-		joinWorkspace("CommunityServer", CommId).
+	<- 	joinWorkspace("server", Id).
 
 
 /* Functions */
-
 
 /**
  * Create a new community
  * @param Name Name of the community to create
  * @param Src Agent who want to create the community
  */
-+!createCommunity( Name, Src ) : .string(Name)  <-
-	makeArtifact(Name ,"MailBoxCommunity",[ Src ],C);
+
++!createForumComm( Name, AgentName) : .string(Name)  <-
+	makeArtifact(Name,"community.arts.ForumComm",[Name, AgentName], C);	
+	focus(C);
 	
-	focus( C );
-	
-	.concat("Create ", Name, Text );
-	.print( Text );
+	.concat(Name, " was created by ", AgentName , Text);
+	printMsg( Text );
 	
 	!addnewCommunity( Name );
 	!newCommunityMsg(Name).
@@ -43,7 +40,46 @@ communities( [] ).
 // an error occured
 -!createCommunity( Name, R ).
 
+/**
+ * Delete a community
+ * @param Name Name of the community to create
+ * @param Src Agent who want to create the community
+ */
 
++!deleteComm( Name, AgentName) : .string(Name)  <-
+	lookupArtifact(Name, Id);
+	deleteComm(AgentName);
+	dispose(Id);
+	.concat(Name, " was disposed by ", AgentName , Text);
+	printMsg( Text );
+	
+	!removeCommunity( Name ).
+
+// The name is not a string
++!deleteComm( Name, R ).
+// an error occured
+-!deleteComm( Name, R ).
+
+/**
+ * Add new community in belief base
+ * @param Name Name of the community to Add
+ */
++!addnewCommunity( Name) : communities(Comms)<-
+	.concat( [Name], Comms, Added ).
+
+/**
+ * removes a community from belief base
+ * @param Name Name of the community to Add
+ */
++!removeCommunity( Name) : communities(Comms)<-
+	.concat( [Name], Comms, Added ).
+	
+/**
+ * Add new community in belief base
+ * @param Name Name of the community to Add
+ */
++!addnewCommunity( Name) : communities(Comms)<-
+	.concat( [Name], Comms, Added ).
 
 
 /**
@@ -53,13 +89,9 @@ communities( [] ).
  */
 +!followCommunity( Name, Src ) <-
 	lookupArtifact( Name, Id);
-	follow(Src) [artifact_name(Name)]
-.
+	follow(Src) [artifact_name(Name)].
 
 -!followCommunity( R ).
-
-
-
 
 
 /**
@@ -74,29 +106,6 @@ communities( [] ).
 
 +!stopfollowingCommunity( R ).
 -!stopfollowingCommunity( R ).
-
-
-
-/**
- * Choose a new random community
- */
-+!getRandomCommunity( Name ) : communities( Comms ) <- 
-	.shuffle(Comms,Result);
-	-+communities( Result );
-	!getFirstCommunity(Name) .
-
-+!getFirstCommunity(S) : communities( [S|L] ).
-+!getFirstCommunity(S) : communities( [] ) <-
-	.print("no community").
-
-
-/**
- * Add new community in belief base
- * @param Name Name of the community to Add
- */
-+!addnewCommunity( Name) : communities(Comms)<-
-	.concat( [Name], Comms, Added ).
-	
 
 
 ///////////////////////////////////////
@@ -141,7 +150,7 @@ communities( [] ).
  */
  
  /**
-  * Inform the agents that a new community have been created
+  * Inform the agents that a new community has been created
   */
 +!newCommunityMsg(Name) <- .broadcast( tell, newCommunity(Name) ).
 

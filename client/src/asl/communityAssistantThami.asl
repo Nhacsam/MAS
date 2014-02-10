@@ -17,7 +17,7 @@ maxNumberOfFollowedCommunities( 10 ).
 
 +!start : .my_name(Name) <- 
 	!joinWork ;
-	makeArtifact(Name ,"CommAssistantGUIWrapperNico",[],C);
+	makeArtifact(Name ,"CommAssistantGUIWrapperThami",[],C);
 	focus(C);
 	!handleCommunity.
 
