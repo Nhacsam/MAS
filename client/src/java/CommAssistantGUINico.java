@@ -160,6 +160,7 @@ public class CommAssistantGUINico extends JFrame implements TreeSelectionListene
 		if( currentCommunity == null )
 			onCommunityClick( newComm );
 		
+		( (DefaultTreeModel)communityTree.getModel() ).reload() ;
 		return this ;
 	}
 	
@@ -174,14 +175,18 @@ public class CommAssistantGUINico extends JFrame implements TreeSelectionListene
 		if( commIndex != -1 ) {
 			CommunityGUI comm = communitiesList.get(commIndex);
 			
+			if( comm.getFollowed() )
+					return this ;
+			
 			knowedCommNode.remove( 
 					comm.setFollowed(true)
 					.getAssociedTreeNode()
 				) ;
 			followedCommNode.add(comm.getAssociedTreeNode());
 		} else 
-			throw new InvalidParameterException( "Name Not found !" );
+			throw new InvalidParameterException( "Name Not found ! " + Name );
 		
+		( (DefaultTreeModel)communityTree.getModel() ).reload() ;
 		return this ;
 	}
 	
@@ -206,6 +211,7 @@ public class CommAssistantGUINico extends JFrame implements TreeSelectionListene
 		} else 
 			throw new InvalidParameterException( "Name Not found !" );
 		
+		( (DefaultTreeModel)communityTree.getModel() ).reload() ;
 		return this ;
 	}
 	
@@ -220,6 +226,9 @@ public class CommAssistantGUINico extends JFrame implements TreeSelectionListene
 		if( commIndex != -1 ) {
 			CommunityGUI comm = communitiesList.get(commIndex);
 			
+			if( ! comm.getFollowed() )
+				return this ;
+			
 			followedCommNode.remove( 
 					comm.setFollowed(true)
 					.getAssociedTreeNode()
@@ -228,6 +237,7 @@ public class CommAssistantGUINico extends JFrame implements TreeSelectionListene
 		} else 
 			throw new InvalidParameterException( "Name Not found !" );
 		
+		( (DefaultTreeModel)communityTree.getModel() ).reload() ;
 		return this ;
 	}
 	
@@ -241,7 +251,7 @@ public class CommAssistantGUINico extends JFrame implements TreeSelectionListene
 		
 		CardLayout cl = (CardLayout)(communityPanel.getLayout());
 		cl.show(communityPanel, c.toString() );
-		
+		currentCommunity = c ;
 	}
 	
 	/**

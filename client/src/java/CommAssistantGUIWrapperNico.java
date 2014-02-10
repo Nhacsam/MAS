@@ -13,22 +13,22 @@ public class CommAssistantGUIWrapperNico extends Artifact {
 	
 	
 	@OPERATION
-	public void addCommunity( String newComm ) {
+	public void addCommunityGUI( String newComm ) {
 		m_GUI.addCommunity(newComm);
 	}
 	
 	@OPERATION
-	public void removeCommunity( String deletedComm ) {
+	public void removeCommunityGUI( String deletedComm ) {
 		m_GUI.removeCommunity( deletedComm );
 	}
 	
 	@OPERATION
-	public void followCommunity( String comm ) {
+	public void followCommunityGUI( String comm ) {
 		m_GUI.followCommunity(comm);
 	}
 	
 	@OPERATION
-	public void stopFollowingCommunity( String comm ) {
+	public void stopFollowingCommunityGUI( String comm ) {
 		m_GUI.stopFollowingCommunity(comm);
 	}
 	
