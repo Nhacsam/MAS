@@ -80,13 +80,21 @@ public class CommAssistantGUI extends JFrame implements TreeSelectionListener {
 	
 	public JTree communityTree ;
 	
-	
+	/**
+	 * Table of nicknames
+	 */
 	private Hashtable<String, String > nickNameTable ;
 	
+	/**
+	 * @var Parent
+	 */
+	private CommAssistantGUIWrapper Parent ;
 	
-	public CommAssistantGUI (String title, ActionListener listener) {
+	
+	public CommAssistantGUI (String title, CommAssistantGUIWrapper parent) {
 		
 		nickNameTable = new Hashtable<String, String >();
+		Parent = parent ;
 		
 		setTitle(title);
 		setSize(800,600);
@@ -109,7 +117,7 @@ public class CommAssistantGUI extends JFrame implements TreeSelectionListener {
 		nicknamePanel.add(nickname);
 		
 		nicknameOk = new JButton("Ok");
-		nicknameOk.addActionListener(listener);
+		nicknameOk.addActionListener(parent);
 		nicknamePanel.add(nicknameOk);
 		
 		topPanel.add(nicknamePanel);
@@ -126,7 +134,7 @@ public class CommAssistantGUI extends JFrame implements TreeSelectionListener {
 		createPanel.add(createType);
 		
 		toCreateOk = new JButton("Create");
-		toCreateOk.addActionListener(listener);
+		toCreateOk.addActionListener(parent);
 		createPanel.add(toCreateOk);
 		
 		topPanel.add(createPanel);
@@ -169,7 +177,7 @@ public class CommAssistantGUI extends JFrame implements TreeSelectionListener {
 	 */
 	public CommAssistantGUI addCommunity( String Name, String Type ) {
 		
-		CommunityGUI newComm = new CommunityGUI( Name, Type ) ;
+		CommunityGUI newComm = new CommunityGUI( Name, Type, this ) ;
 		communitiesList.add( newComm ) ;
 		DefaultMutableTreeNode commNode = new DefaultMutableTreeNode(newComm);
 		newComm.setAssociedTreeNode(commNode);
@@ -207,6 +215,11 @@ public class CommAssistantGUI extends JFrame implements TreeSelectionListener {
 			throw new InvalidParameterException( "Name Not found ! " + Name );
 		
 		( (DefaultTreeModel)communityTree.getModel() ).reload() ;
+		return this ;
+	}
+	
+	public CommAssistantGUI followCommunity( CommunityGUI comm ) {
+		Parent.signalFollow(comm.getName());
 		return this ;
 	}
 	
@@ -258,6 +271,11 @@ public class CommAssistantGUI extends JFrame implements TreeSelectionListener {
 			throw new InvalidParameterException( "Name Not found !" );
 		
 		( (DefaultTreeModel)communityTree.getModel() ).reload() ;
+		return this ;
+	}
+	
+	public CommAssistantGUI stopFollowingCommunity( CommunityGUI comm ) {
+		Parent.signalStopFollowing(comm.getName() );
 		return this ;
 	}
 	

@@ -1,6 +1,8 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -15,7 +17,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
  * And display its
  * @author nikkidbz
  */
-public class CommunityGUI extends JPanel {
+public class CommunityGUI extends JPanel  implements ActionListener {
 	
 	/**
 	 * @var name Name of the community
@@ -37,6 +39,18 @@ public class CommunityGUI extends JPanel {
 	 */
 	private DefaultMutableTreeNode associedTreeNode = null ;
 	
+	private CommAssistantGUI parent ;
+	
+	/**
+	 * @var followButton Follow/unFollow Button 
+	 */
+	private JButton followButton ;
+	
+	/**
+	 * @var newMessage Write Button
+	 */
+	private JButton newMessage ;
+	
 	
 	private JPanel messagePanel ;
 	
@@ -55,7 +69,8 @@ public class CommunityGUI extends JPanel {
 	 * @param name Name of the community
 	 * @param type Type of community
 	 */
-	public CommunityGUI(String name, String type) {
+	public CommunityGUI(String name, String type, CommAssistantGUI parent ) {
+		this.parent = parent ;
 		this.name = name ;
 		this.type = type ;
 		
@@ -128,8 +143,12 @@ public class CommunityGUI extends JPanel {
 		
 		this.add(globalPanel ) ;
 		
+		followButton = new JButton( "Follow/UnFollow") ;
+		followButton.addActionListener(this);
+		globalPanel.add( followButton ) ;
 		
-		JButton newMessage = new JButton( "Write") ;
+		newMessage = new JButton( "Write") ;
+		newMessage.addActionListener(this);
 		globalPanel.add( newMessage ) ;
 		
 		
@@ -183,6 +202,26 @@ public class CommunityGUI extends JPanel {
 	
 	
 	
+	
+	
+	
+	
+	public void actionPerformed(ActionEvent e) { 
+		
+		Object obj = e.getSource() ;
+		
+		if( obj == followButton ) {
+			if( followed )
+				parent.stopFollowingCommunity(this );
+			else
+				parent.followCommunity(this) ;
+			
+		} else if ( obj == newMessage ) {
+			
+		}
+		
+		
+	}
 	
 	
 	
@@ -254,7 +293,9 @@ public class CommunityGUI extends JPanel {
 		return this ;
 	}
 	
-	
+	public String getName(){
+		return name ;
+	}
 	
 	
 }

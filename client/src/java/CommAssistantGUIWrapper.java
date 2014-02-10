@@ -42,6 +42,16 @@ public class CommAssistantGUIWrapper extends Artifact implements ActionListener 
 	}
 	
 	
+	public void signalFollow( String Name ) {
+		signal( "gui", "follow", Name );
+	}
+	
+	public void signalStopFollowing( String Name ) {
+		System.out.println(Name);
+		signal( "gui", "stopFollowing", Name );
+	}
+	
+	
 	
 	public void actionPerformed(ActionEvent e) { 
 		
@@ -61,8 +71,6 @@ public class CommAssistantGUIWrapper extends Artifact implements ActionListener 
 				signal( "gui", "create", name, type );
 			} catch (IllegalMonitorStateException ex ) {}
 		}
-		
-		
 	}
 	
 	

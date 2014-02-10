@@ -93,6 +93,9 @@ maxNumberOfFollowedCommunities( 10 ).
 +gui( "nick", Nick) : my_name(Name) <- .broadcast( tell, nickname(Nick, Name) ).
 +nickname(Nick, Name) : guiId( GUIID) <- addNicknameGUI( Nick, Name ) [ artifact_id( GUIID )].
 
++gui( "follow", Name ) <- !followCommunity( Name ).
++gui( "stopFollowing", Name ) <- .print(Name); !stopfollowingCommunity( Name ).
+
 
 +newFollower(ArtiName, Name)  <- .concat("New follower ", Name, Text ); .print(Text).
 +followerLeave(Name) <- .concat("Follower Leave ", Name, Text ); .print(Text).
