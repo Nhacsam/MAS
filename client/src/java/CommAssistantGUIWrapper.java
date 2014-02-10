@@ -11,6 +11,7 @@ public class CommAssistantGUIWrapper extends Artifact implements ActionListener 
 	private CommAssistantGUI m_GUI ;
 	
 	void init() {
+
 		m_GUI = new CommAssistantGUI("Community Assistant", this);
 		m_GUI.setVisible(true);
 	}

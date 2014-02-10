@@ -47,6 +47,7 @@ contains([_|L],X):- contains(L,X).
 
 +!createCommunity( Name ) <- !createCommunity( Name, "community.arts.MailComm").
 
++!createCommunity( Name ) <- !createCommunity( Name, "community.arts.ForumComm").
 
 -!userCallbackCreate( Name, Type ).
 

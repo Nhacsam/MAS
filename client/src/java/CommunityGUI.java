@@ -53,7 +53,26 @@ public class CommunityGUI extends JPanel  implements ActionListener {
 	
 	
 	private JPanel messagePanel ;
+	private JPanel forumPanel ;
 	
+	
+
+	
+	/**
+	 * @var PostMessage Field for posting a new message in the forum community
+	 */
+	public JTextField PostMessage ;
+	
+	/**
+	 * @var PostMessageOk Button to validate posting the message
+	 */
+	public JButton PostMessageOk ;
+	
+	
+	/**
+	 * @var PreviousMessages where we print the previous posted messages
+	 */
+	public JLabel PreviousMessages = new JLabel();
 	
 	/**
 	 * Constructor
@@ -82,31 +101,30 @@ public class CommunityGUI extends JPanel  implements ActionListener {
 	
 	
 	
-	/**
-	 * @var PostMessage Field for posting a new message in the forum community
-	 */
-	public JTextField PostMessage ;
-	
-	/**
-	 * @var PostMessageOk Button to validate posting the message
-	 */
-	public JButton PostMessageOk ;
-	
-	/**
-	 * @var ActualiserForum Button to reload the news feed
-	 */
-	public JButton ActualiserForum ;
-	
-	/**
-	 * @var PreviousMessages where we print the previous posted messages
-	 */
-	public JLabel PreviousMessages;
-	
 	public void constructForumPanel() {
 		
+		JPanel globalPanel = new JPanel () ;
+		globalPanel.setLayout(new BoxLayout(globalPanel,BoxLayout.Y_AXIS));
+		globalPanel.setVisible(true);
+		
+		JLabel nameLabel = new JLabel(name) ;
+		nameLabel.setFont( new Font( "Serif", Font.PLAIN, 30 ) );
+		globalPanel.add( nameLabel ) ;
+		
+		this.add(globalPanel ) ;
+		
+		
+		JButton newMessage = new JButton( "Write") ;
+		globalPanel.add( newMessage ) ;
+		
+		
+		forumPanel = new JPanel () ;
+		forumPanel.setLayout(new BoxLayout(forumPanel,BoxLayout.Y_AXIS));
+		JScrollPane scrollPane = new JScrollPane( forumPanel );
+		scrollPane.setPreferredSize( new Dimension(500, 400) );
+		globalPanel.add( scrollPane ) ;
 		
 		// Post new message button 
-		JPanel forumPanel = new JPanel() ;
 		forumPanel.add( new JLabel("Post new message: "));
 		
 		PostMessage = new JTextField(30);
@@ -115,16 +133,10 @@ public class CommunityGUI extends JPanel  implements ActionListener {
 		PostMessageOk = new JButton("Post");
 		forumPanel.add(PostMessageOk);
 		
-		ActualiserForum = new JButton("Actualiser");
-		forumPanel.add(ActualiserForum);
+		forumPanel.add(PreviousMessages);
 		
-		PreviousMessages = new JLabel();
-		
-//				PreviousMessages.setText();
-
 		this.add(forumPanel );
-		
-		
+			
 	}
 	
 	
@@ -180,8 +192,6 @@ public class CommunityGUI extends JPanel  implements ActionListener {
 	
 	public void addMailMessage( String from, String msg ) {
 		
-		
-		
 		JLabel fromLabel = new JLabel( "Message from " + from );
 		fromLabel.setForeground(new Color( 255, 0, 0));
 		messagePanel.add( fromLabel ) ;
@@ -196,6 +206,17 @@ public class CommunityGUI extends JPanel  implements ActionListener {
 	
 	
 	public void addForumMessage(String from, String msg) {
+		
+		
+//		JLabel fromLabel = new JLabel( "Message from " + from );
+//		fromLabel.setForeground(new Color( 255, 0, 0));
+//		PreviousMessages.add( fromLabel ) ;
+//		
+//		JLabel message = new JLabel(msg );
+//		
+//		JScrollPane messagePannel = new JScrollPane( message );
+//		messagePannel.setPreferredSize(new Dimension(500, 150) );
+//		PreviousMessages.add( messagePannel ) ;
 		
 	}
 	
