@@ -6,7 +6,7 @@ import cartago.Artifact;
 import cartago.OPERATION;
 
 //CArtAgO artifact code for project projetmas
-
+// hello
 
 abstract class Community extends Artifact {
 	
