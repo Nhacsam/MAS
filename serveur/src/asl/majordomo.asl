@@ -9,3 +9,6 @@
 	<-  makeArtifact("msg-console","screen.arts.GUIConsole",[]);
 //		makeArtifact("forum-community","community.arts.ForumComm",[]);
 		printMsg("ready. Your turn!").
+		
+		
++test <- .print("Test").

@@ -19,7 +19,7 @@ public class ForumComm extends Community{
 		setOwner(agentName);
 		setName(c_name);
 		commId=counter++;
-		follow(agentName);
+		follow();
 		System.out.println(agentName+" created the community "+c_name+":"+commId+ " as a ForumCommunity");
 	}
 		

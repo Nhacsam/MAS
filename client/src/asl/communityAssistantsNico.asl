@@ -8,7 +8,6 @@
 
 maxNumberOfFollowedCommunities( 10 ).
 
-
 /* Initial goals */
 
 !start.
@@ -17,7 +16,9 @@ maxNumberOfFollowedCommunities( 10 ).
 
 +!start : .my_name(Name) <- 
 	makeArtifact(Name ,"CommAssistantGUIWrapperNico",[],C);
+	+guiId( C );
 	focus(C);
+	
 	!joinWork ;
 	!handleCommunity.
 
@@ -70,45 +71,22 @@ maxNumberOfFollowedCommunities( 10 ).
 +!agentAction( Rand, LF ).
 
 
-+!followCommunityNico( C ) : .my_name( Name ) <-
-	!followCommunity( C );
-	lookupArtifact( Name, Id);
-	.concat("Try to follow ", C, Text ); .print(Text);
-	followCommunityGUI( C ) [ artifact_id( Id )]
-	.
 
-
-
-
-+!userCallbackNew( CommName ) : .my_name( Name ) <-
++!userCallbackNew( CommName ) : .my_name( Name ) & guiId( GUIID) <-
 	.concat("New Comm ", CommName, Text ); .print(Text);
-	lookupArtifact( Name, Id);
-	addCommunityGUI(CommName) [artifact_id( Id )].
+	addCommunityGUI(CommName) [artifact_id( GUIID )].
 
-
-+!userCallbackCreate( CommName ) : .my_name( Name ) <-
-	.concat("Create Comm ", CommName, Text ); .print(Text);
-	lookupArtifact( Name, Id);
-	addCommunityGUI(CommName) [artifact_id( Id )].
-
-+!userCallbackFollow( CommName ) : .my_name( Name ) <-
++!userCallbackFollow( CommName ) : .my_name( Name ) & guiId( GUIID) <-
 	.concat("Try to follow ", CommName, Text ); .print(Text);
-	lookupArtifact( Name, Id);
-	followCommunityGUI( CommName ) [ artifact_id( Id )].
+	followCommunityGUI( CommName ) [ artifact_id( GUIID )].
 	
-+!userCallbackStopFollowing( CommName ) : .my_name( Name ) <-
++!userCallbackStopFollowing( CommName ) : .my_name( Name ) & guiId( GUIID) <-
 	.concat("Stop follow ", CommName, Text ); .print(Text);
-	lookupArtifact( Name, Id);
-	stopFollowingCommunityGUI( CommName ) [ artifact_id( Id )].
+	stopFollowingCommunityGUI( CommName ) [ artifact_id( GUIID )].
 
 
 
 /* Events */
-
-+newCommunity( ComId)[source(S)]<- 
-	!addnewCommunity( ComId ) .
-
-
 
 
 +newFollower(ArtiName, Name)  <- .concat("New follower ", Name, Text ); .print(Text).
