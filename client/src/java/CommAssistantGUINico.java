@@ -1,3 +1,5 @@
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.security.InvalidParameterException;
 import java.util.LinkedList;
 
@@ -7,9 +9,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JTree;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
@@ -21,7 +23,7 @@ import javax.swing.tree.DefaultTreeModel;
  * @author nikkidbz
  *
  */
-public class CommAssistantGUINico extends JFrame {
+public class CommAssistantGUINico extends JFrame implements TreeSelectionListener {
 	
 	/**
 	 * @var nickname Nickname field
@@ -48,7 +50,7 @@ public class CommAssistantGUINico extends JFrame {
 	/**
 	 * @var contentPanel Panel which include the tree and the community Content  
 	 */
-	public JPanel contentPanel ;
+	public JPanel communityPanel ;
 	
 	
 	/**
@@ -65,7 +67,10 @@ public class CommAssistantGUINico extends JFrame {
 	/**
 	 * @var currentCommunity Community which is currently diplayed on the screen
 	 */
-	private JPanel currentCommunity = null ;
+	private CommunityGUI currentCommunity = null ;
+	
+	
+	public JTree communityTree ;
 	
 	
 	public CommAssistantGUINico (String title ) {
@@ -75,7 +80,11 @@ public class CommAssistantGUINico extends JFrame {
 		
 		JPanel globalPanel = new JPanel();
 		setContentPane(globalPanel);
-		globalPanel.setLayout(new BoxLayout(globalPanel,BoxLayout.Y_AXIS));
+		globalPanel.setLayout(new BorderLayout());
+		
+		
+		JPanel topPanel = new JPanel();
+		topPanel.setLayout(new BoxLayout(topPanel,BoxLayout.Y_AXIS));
 		
 		
 		// NickName
@@ -88,7 +97,7 @@ public class CommAssistantGUINico extends JFrame {
 		nicknameOk = new JButton("Ok");
 		nicknamePanel.add(nicknameOk);
 		
-		globalPanel.add(nicknamePanel);
+		topPanel.add(nicknamePanel);
 		
 		// Create button 
 		JPanel createPanel = new JPanel() ;
@@ -100,11 +109,11 @@ public class CommAssistantGUINico extends JFrame {
 		toCreateOk = new JButton("Create");
 		createPanel.add(toCreateOk);
 		
-		globalPanel.add(createPanel);
+		topPanel.add(createPanel);
+		globalPanel.add(topPanel, BorderLayout.NORTH );
 		
 		
 		// Content
-		contentPanel =  new JPanel();
 		
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode();
 		knowedCommNode = new DefaultMutableTreeNode("Knowed Community");
@@ -115,21 +124,19 @@ public class CommAssistantGUINico extends JFrame {
 		root.add(knowedCommNode) ;
 		root.add(followedCommNode) ;
 		
-		JTree jTree = new JTree(  );
+		communityTree = new JTree(  );
+		communityTree.addTreeSelectionListener(this);
+		
 		JScrollPane jScrollPane = new JScrollPane();
-		jScrollPane.setViewportView(jTree);
-		jTree.setModel(new DefaultTreeModel(root));
-		jTree.setRootVisible(false);
+		jScrollPane.setViewportView(communityTree);
+		communityTree.setModel(new DefaultTreeModel(root));
+		communityTree.setRootVisible(false);
 		
-		contentPanel.add(jScrollPane);
-		globalPanel.add(contentPanel);
+		globalPanel.add(jScrollPane, BorderLayout.WEST);
 		
+		communityPanel = new JPanel( new CardLayout() );
+		globalPanel.add(communityPanel, BorderLayout.CENTER);
 		
-		this.addCommunity("test 1 ");
-		this.addCommunity("Test 2 ");
-		this.addCommunity("Test 3 ");
-		
-		followCommunity( "Test 2 ");
 		
 	}
 	
@@ -147,6 +154,8 @@ public class CommAssistantGUINico extends JFrame {
 		DefaultMutableTreeNode commNode = new DefaultMutableTreeNode(newComm);
 		newComm.setAssociedTreeNode(commNode);
 		knowedCommNode.add(commNode);
+		
+		communityPanel.add(newComm.toString(), newComm) ;
 		
 		if( currentCommunity == null )
 			onCommunityClick( newComm );
@@ -222,19 +231,39 @@ public class CommAssistantGUINico extends JFrame {
 		return this ;
 	}
 	
+	
+	
 	/**
 	 * Change the community displayed
 	 * @param c New Community to display
 	 */
 	public void onCommunityClick( CommunityGUI c ) {
 		
-		if( currentCommunity != null ) {
-			contentPanel.remove(currentCommunity);
-		}
+		CardLayout cl = (CardLayout)(communityPanel.getLayout());
+		cl.show(communityPanel, c.toString() );
 		
-		currentCommunity = c ;
-		contentPanel.add(c);
 	}
+	
+	/**
+	 * Event generated when a community is selected
+	 * @param e
+	 */
+	public void valueChanged(javax.swing.event.TreeSelectionEvent e) {
+		
+		
+		DefaultMutableTreeNode node = (DefaultMutableTreeNode) communityTree
+			.getLastSelectedPathComponent();
+		if (node == null || node.getLevel() <= 1 )
+	      return;
+	    
+		onCommunityClick( (CommunityGUI) node.getUserObject() );
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 	

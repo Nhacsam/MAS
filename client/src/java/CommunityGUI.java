@@ -1,3 +1,5 @@
+import java.awt.Font;
+import java.awt.Insets;
 import java.awt.LayoutManager;
 
 import javax.swing.BoxLayout;
@@ -76,11 +78,14 @@ public class CommunityGUI extends JPanel {
 
 	public void constructPanel() {
 		
-		setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+		JPanel globalPanel = new JPanel() ;
+		globalPanel.setLayout(new BoxLayout(globalPanel,BoxLayout. Y_AXIS));
+		add(globalPanel ) ;
 		
-		add( new JLabel(name) ) ;
+		JLabel nameLabel = new JLabel(name) ;
+		nameLabel.setFont( new Font( "Serif", Font.PLAIN, 30 ) );
 		
-		
+		globalPanel.add( nameLabel ) ;
 		
 	}
 	

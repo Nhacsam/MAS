@@ -41,7 +41,7 @@ maxNumberOfFollowedCommunities( 10 ).
 	.concat( "Community knowed : ", LC, "  Communities Followed : ", LF, Text);
 	.print(Text);
 	
-	.wait(10000);
+	.wait(10);
 	!handleCommunity.
 
 
@@ -50,7 +50,7 @@ maxNumberOfFollowedCommunities( 10 ).
 					& maxNumberOfFollowedCommunities( M ) &
 					LF < M <-
 	!getRandomCommunity( Community );
-	!followCommunity( Community ).
+	!followCommunityNico( Community ).
 
 // Create a New Community
 +!agentAction( Rand, LF ) : 0.3 < Rand & Rand < 0.35
@@ -59,7 +59,7 @@ maxNumberOfFollowedCommunities( 10 ).
 	.random(RandName);
 	.concat("", RandName, Community );
 	!createCommunity( Community );
-	!followCommunity( Community ).
+	!followCommunityNico( Community ).
 
 // Stop Following a Community
 +!agentAction( Rand, LF ) : 0.4 < Rand & Rand < 0.5  & LF > 0  <-
@@ -72,20 +72,31 @@ maxNumberOfFollowedCommunities( 10 ).
 +!agentAction( Rand, LF ).
 
 
-
++!followCommunityNico( C ) : .my_name( Name ) <-
+	!followCommunity( C );
+	lookupArtifact( Name, Id);
+	followCommunity( C ) [ artifact_name( Name )]
+	.
 
 
 
 // Crate a new community if we try de follow a community which not exist
 +!followCommunity( R ) <-
 	!createCommunity( S );
-	!followCommunity( S ).
+	!followCommunityNico( S ).
 
 
 
 /* Events */
 
++newCommunity( ComId)[source(S)] : .my_name( Name ) <- 
+	lookupArtifact( Name, Id);
+	addCommunity(ComId) [artifact_name( Name )] ; 
+	!addnewCommunity( ComId ) .
+
+
+
 
 +newFollower(ArtiName, Name)  <- .concat("New follower ", Name, Text ); .print(Text).
 +followerLeave(Name) <- .concat("Follower Leave ", Name, Text ); .print(Text).
-+newCommunity( ComId)[source(S)] <- !addnewCommunity( ComId ) .
+
