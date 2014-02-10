@@ -16,13 +16,14 @@ maxNumberOfFollowedCommunities( 10 ).
 /* Plans */
 
 +!start : .my_name(Name) <- 
-	!joinWork ;
 	makeArtifact(Name ,"CommAssistantGUIWrapperThami",[],C);
 	focus(C);
+	!joinWork ;
 	!handleCommunity.
 
 
-+!joinWork: true <- joinRemoteWorkspace("Server",SrvId).
+
++!joinWork: true <- joinRemoteWorkspace("server","localhost",WspID2).
 -!joinWork: true <- .wait(10); !joinWork.
 
 

@@ -30,13 +30,45 @@ contains([_|L],X):- contains(L,X).
 
 /**
  * Create a new community
- * @param Name Return the community Name
+ * @param Name The community Name
+ * @param Type Type of the community
  */
-+!createCommunity( Name ) <-
-	!userCallbackCreate( Name );
-	.send( "communityServer", tell, create(Name) ).
++!createCommunity( Name, Type ) : createdCommunity(Comms)  <-
+	!userCallbackCreate( Name, Type );
+	makeArtifact(Name, Type ,[Type], C);
+	
+	.concat( [Name], Comms, Added );
+	-+createdCommunity( Added );
+	
+	!addnewCommunity( Name);
+	!followCommunity( Name );
+	
+	.broadcast( tell, newCommunity(Name) ).
 
--!userCallbackCreate( Name ).
++!createCommunity( Name ) <- !createCommunity( Name, "community.arts.MailComm").
+
+
+-!userCallbackCreate( Name, Type ).
+
+
+
+/**
+ * Delete a community
+ * @param Name Name of the community to create
+ */
+
++!deleteComm( Name ) : .string(Name) & createdCommunity( Created ) & contains(Created, Name ) <-
+	lookupArtifact(Name, Id);
+	deleteComm;
+	dispose(Id).
+
+// The name is not a string
++!deleteComm( Name, R ).
+// an error occured
+-!deleteComm( Name, R ).
+
+
+
 
 /**
  * Follow a community
@@ -44,7 +76,9 @@ contains([_|L],X):- contains(L,X).
  */
 +!followCommunity( Name ) : .string(Name) & communities(Comms) & followedCommunity ( FollowedComms ) <-
 	!userCallbackFollow( Name );
-	.send( "communityServer", tell, follow(Name) );
+	lookupArtifact( Name, Id);
+	focus( Id );
+	follow [artifact_id(Id)];
 	
 	.concat(FollowedComms, [C], Added );
 	-+followedCommunity( Added );
@@ -57,21 +91,25 @@ contains([_|L],X):- contains(L,X).
 +!followCommunity( R ) : .my_name( Name )  <-
 	.random(RandName);
 	.concat("", RandName, R );
-	!createCommunity( R );
-	!followCommunityNico( R ).
+	!createCommunity( R ).
 	
 -!followCommunity( R ).
-
 
 -!userCallbackFollow( Name ).
 
 
+
+
+
+
 /**
  * Stop following a Community
+ * @param Name Name to te community to stop following
  */
 +!stopfollowingCommunity( Name ) : .string( Name ) & communities(Comms) & followedCommunity ( FollowedComms )  <-
 	!userCallbackStopFollowing( Name );
-	.send( "communityServer", tell, stopfollowing(Name) );
+	lookupArtifact( Name, Id);
+	stopfollow [artifact_id(Id)];
 	
 	.concat(Comms, [C], Added );
 	-+communities( Added );
@@ -83,6 +121,7 @@ contains([_|L],X):- contains(L,X).
 -!stopfollowingCommunity( R ).
 
 -!userCallbackStopFollowing( Name ).
+
 
 
 
@@ -108,3 +147,12 @@ contains([_|L],X):- contains(L,X).
 	-+communities( Added ).
 
 -!userCallbackNew( Name ).
+
+
+
+/**************
+ *** EVENTS ***
+ **************/
+
++newCommunity( Name)[source(S)]<-  !addnewCommunity( Name ) .
+

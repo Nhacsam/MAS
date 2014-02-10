@@ -2,12 +2,18 @@ package community.arts;
 
 import java.util.LinkedList;
 
+import cartago.AgentId;
 import cartago.Artifact;
 import cartago.OPERATION;
 
 //CArtAgO artifact code for project projetmas
-// hello
 
+
+/**
+ * Abstract class for all the communities
+ * @author nikkidbz
+ *
+ */
 abstract class Community extends Artifact {
 	
 	protected int commId;
@@ -16,9 +22,25 @@ abstract class Community extends Artifact {
 	protected String name ;
 	static int counter=0;
 	
+	protected LinkedList<AgentId> m_followers ;
 	
-	void init() {
-		System.out.println("Community Server Ready");
+	protected AgentId m_owner ;
+	
+	protected String m_type ;
+	
+	/**
+	 * Community Initialization
+	 * @param type Community Type
+	 */
+	void init(String type) {
+		
+		m_type = type ;
+		m_owner =  getCreatorId() ;
+		
+		m_followers = new LinkedList<AgentId>() ;
+		m_followers.add( m_owner );
+		
+		
 	}
 	
 	
@@ -26,25 +48,30 @@ abstract class Community extends Artifact {
 	 * Ask to follow a community
 	 * Add the agent to the follower and signal to others
 	 */
-	@OPERATION void follow( String src ) {
-		if(!followers.contains(src))
-			followers.add( src );
+	@OPERATION void follow() {
+		AgentId src = this.getOpUserId() ;
+		
+		if(!m_followers.contains(src))
+			m_followers.add( src );
 	}
+	
 	
 	
 	/**
 	 * Ask to  stop following a community
 	 * Remove the agent to the follower and signal to others
 	 */
-	@OPERATION void stopfollow( String src ) {
-		if (src == owner){
-			if(followers.size() == 1){
-				followers.remove(src);
+	@OPERATION void stopfollow() {
+		AgentId src = this.getOpUserId() ;
+		
+		if (src == m_owner){
+			if(m_followers.size() == 1){
+				m_followers.remove(src);
 				deleteComm(owner);
 			}
 		}
 		else {
-			followers.remove(src);
+			m_followers.remove(src);
 		}
 	}
 	

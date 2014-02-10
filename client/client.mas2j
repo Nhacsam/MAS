@@ -1,10 +1,9 @@
 MAS projetmasbis {
 
-	environment: c4jason.CartagoEnvironment("infrastructure")
+	environment: c4jason.CartagoEnvironment
 
 	agents:
 		communityAssistantsNico agentArchClass c4jason.CAgentArch #5;
-		communityServer agentArchClass c4jason.CAgentArch;
 		aThami communityAssistantThami agentArchClass c4jason.CAgentArch;
 
 	aslSourcePath:

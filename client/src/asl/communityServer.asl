@@ -14,8 +14,7 @@ communities( [] ).
 /* Initial goals */
 !setup_and_monitor.
 +!setup_and_monitor
-	<- 	 	createWorkspace("CommunityServer");
-			joinWorkspace("CommunityServer", CommId).
+	<- 	 	joinRemoteWorkspace("server","localhost",WspID2).
 
 
 /* Functions */

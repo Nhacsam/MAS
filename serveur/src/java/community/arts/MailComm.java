@@ -11,7 +11,7 @@ public class MailComm extends Community{
 	}
 	
 	/**
-	 * Send a private mesage for an other Agent
+	 * Send a private message for an other Agent
 	 * @param from Agent who sent the message
 	 * @param to Agent who will received the message
 	 */
