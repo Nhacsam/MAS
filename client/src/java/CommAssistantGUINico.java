@@ -46,26 +46,6 @@ public class CommAssistantGUINico extends JFrame implements TreeSelectionListene
 	 */
 	public JButton toCreateOk ;
 	
-	/**
-	 * @var PostMessage Field for posting a new message in the forum community
-	 */
-	public JTextField PostMessage ;
-	
-	/**
-	 * @var PostMessageOk Button to validate posting the message
-	 */
-	public JButton PostMessageOk ;
-	
-	/**
-	 * @var ActualiserForum Button to reload the news feed
-	 */
-	public JButton ActualiserForum ;
-	
-	/**
-	 * @var PreviousMessages where we print the previous posted messages
-	 */
-	public JLabel PreviousMessages;
-	
 	
 	/**
 	 * @var contentPanel Panel which include the tree and the community Content  
@@ -156,32 +136,6 @@ public class CommAssistantGUINico extends JFrame implements TreeSelectionListene
 		
 		communityPanel = new JPanel( new CardLayout() );
 		globalPanel.add(communityPanel, BorderLayout.CENTER);
-		
-		
-		
-		
-		
-		
-		
-		// Post new message button 
-		JPanel forumPanel = new JPanel() ;
-		forumPanel.add( new JLabel("Post new message: "));
-		
-		PostMessage = new JTextField(30);
-		forumPanel.add(PostMessage);
-		
-		PostMessageOk = new JButton("Post");
-		forumPanel.add(PostMessageOk);
-		
-		ActualiserForum = new JButton("Actualiser");
-		forumPanel.add(ActualiserForum);
-		
-		PreviousMessages = new JLabel();
-		
-//		PreviousMessages.setText();
-
-		globalPanel.add(forumPanel, BorderLayout.CENTER );
-
 		
 		
 	}
@@ -295,7 +249,6 @@ public class CommAssistantGUINico extends JFrame implements TreeSelectionListene
 	 */
 	public void onCommunityClick( CommunityGUI c ) {
 		
-		System.out.println("test");
 		CardLayout cl = (CardLayout)(communityPanel.getLayout());
 		cl.show(communityPanel, c.toString() );
 		currentCommunity = c ;

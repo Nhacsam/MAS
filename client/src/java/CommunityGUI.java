@@ -1,13 +1,13 @@
-import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.LayoutManager;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
@@ -15,7 +15,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
  * And display its
  * @author nikkidbz
  */
-public class CommunityGUI extends JScrollPane {
+public class CommunityGUI extends JPanel {
 	
 	/**
 	 * @var name Name of the community
@@ -38,7 +38,7 @@ public class CommunityGUI extends JScrollPane {
 	private DefaultMutableTreeNode associedTreeNode = null ;
 	
 	
-	private JPanel globalPanel ;
+	private JPanel messagePanel ;
 	
 	
 	/**
@@ -66,7 +66,49 @@ public class CommunityGUI extends JScrollPane {
 	}
 	
 	
+	
+	/**
+	 * @var PostMessage Field for posting a new message in the forum community
+	 */
+	public JTextField PostMessage ;
+	
+	/**
+	 * @var PostMessageOk Button to validate posting the message
+	 */
+	public JButton PostMessageOk ;
+	
+	/**
+	 * @var ActualiserForum Button to reload the news feed
+	 */
+	public JButton ActualiserForum ;
+	
+	/**
+	 * @var PreviousMessages where we print the previous posted messages
+	 */
+	public JLabel PreviousMessages;
+	
 	public void constructForumPanel() {
+		
+		
+		// Post new message button 
+		JPanel forumPanel = new JPanel() ;
+		forumPanel.add( new JLabel("Post new message: "));
+		
+		PostMessage = new JTextField(30);
+		forumPanel.add(PostMessage);
+		
+		PostMessageOk = new JButton("Post");
+		forumPanel.add(PostMessageOk);
+		
+		ActualiserForum = new JButton("Actualiser");
+		forumPanel.add(ActualiserForum);
+		
+		PreviousMessages = new JLabel();
+		
+//				PreviousMessages.setText();
+
+		this.add(forumPanel );
+		
 		
 	}
 	
@@ -76,24 +118,31 @@ public class CommunityGUI extends JScrollPane {
 
 	public void constructMailPanel() {
 		
-		globalPanel = new JPanel () ;
-		globalPanel.setLayout(new BoxLayout(globalPanel,BoxLayout. Y_AXIS));
-		add(globalPanel ) ;
+		JPanel globalPanel = new JPanel () ;
+		globalPanel.setLayout(new BoxLayout(globalPanel,BoxLayout.Y_AXIS));
+		globalPanel.setVisible(true);
 		
 		JLabel nameLabel = new JLabel(name) ;
 		nameLabel.setFont( new Font( "Serif", Font.PLAIN, 30 ) );
-		
 		globalPanel.add( nameLabel ) ;
 		
-		/*
+		this.add(globalPanel ) ;
+		
 		
 		JButton newMessage = new JButton( "Write") ;
 		globalPanel.add( newMessage ) ;
 		
 		
-		addMessage("toto", "iqsdh oisqh oif hdoih sdopi fpiosd fiopsd hoi dspoif hopisd fopis doif soif posdi hfpoisdp piof dpoif dspoi hfposid hfpoisd hfpoidsh iofsd oisfd poifsd poifsd pofsdi pfosdi posid fsdoi hpofsdi hposdfi dfspoi fdspoi hfdpo hfsdpoi hfdspoi h" );
-		*/
+		messagePanel = new JPanel () ;
+		messagePanel.setLayout(new BoxLayout(messagePanel,BoxLayout.Y_AXIS));
+		JScrollPane scrollPane = new JScrollPane( messagePanel );
+		scrollPane.setPreferredSize( new Dimension(500, 400) );
+		globalPanel.add( scrollPane ) ;
 		
+		
+		addMessage("toto", "iqsdh oisqh oif hdoih sdopi fpiosd fiopsd hoi" );
+		addMessage("toto", "iqsdh oisqh oif hdoih sdopi fpiosd fiopsd hoi" );
+		addMessage("toto", "iqsdh oisqh oif hdoih sdopi fpiosd fiopsd hoi" );
 	}
 	
 	public CommunityGUI addMessage( String from, String msg ) {
@@ -112,17 +161,17 @@ public class CommunityGUI extends JScrollPane {
 	
 	public void addMailMessage( String from, String msg ) {
 		
-		JPanel messagePannel = new JPanel();
-		messagePannel.setLayout(new BorderLayout());
+		
 		
 		JLabel fromLabel = new JLabel( "Message from " + from );
 		fromLabel.setForeground(new Color( 255, 0, 0));
-		messagePannel.add(fromLabel,BorderLayout.NORTH );
+		messagePanel.add( fromLabel ) ;
 		
 		JLabel message = new JLabel(msg );
-		messagePannel.add(message,BorderLayout.CENTER );
 		
-		globalPanel.add( messagePannel ) ;
+		JScrollPane messagePannel = new JScrollPane( message );
+		messagePannel.setPreferredSize(new Dimension(500, 150) );
+		messagePanel.add( messagePannel ) ;
 		
 	}
 	
