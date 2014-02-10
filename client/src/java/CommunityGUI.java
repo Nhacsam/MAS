@@ -3,10 +3,12 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -40,6 +42,12 @@ public class CommunityGUI extends JPanel  implements ActionListener {
 	private DefaultMutableTreeNode associedTreeNode = null ;
 	
 	private CommAssistantGUI parent ;
+	
+	
+	/**
+	 * @var followers List of followers
+	 */
+	LinkedList<String> followers ;
 	
 	/**
 	 * @var followButton Follow/unFollow Button 
@@ -92,6 +100,7 @@ public class CommunityGUI extends JPanel  implements ActionListener {
 		this.parent = parent ;
 		this.name = name ;
 		this.type = type ;
+		followers = new LinkedList<String>() ;
 		
 		if( type ==  "ForumComm"  )
 			constructForumPanel() ;
@@ -238,10 +247,42 @@ public class CommunityGUI extends JPanel  implements ActionListener {
 				parent.followCommunity(this) ;
 			
 		} else if ( obj == newMessage ) {
-			
+			String to = getMessageToDialog();
+			String message = getMessageDialog() ;
+			parent.sendMessage(this, to, message );
 		}
 		
 		
+	}
+	
+	
+	
+	private String getMessageToDialog() {
+		
+		String[] followersArray = {} ;
+		followers.toArray( followersArray ) ;
+		
+		return (String) JOptionPane.showInputDialog(this,
+                "Send a message",
+                "Send a message - Select a receiver",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                followersArray,
+                "a" );
+	}
+	
+	private String getMessageDialog() {
+		
+		return (String) JOptionPane.showInputDialog(this,
+                "Send a message",
+                "Send a message - Write a message",
+                JOptionPane.PLAIN_MESSAGE);
+	}
+	
+	
+	
+	public void addFollower( String nick ) {
+		followers.add(nick);
 	}
 	
 	

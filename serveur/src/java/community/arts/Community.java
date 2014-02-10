@@ -105,8 +105,8 @@ abstract class Community extends Artifact {
 	 * Send a public message for all agent who focused the Community Artifact
 	 * @param from Agent who sent the message
 	 */
-	protected void sendPublicMessage( AgentId from ) {
-		signal("arti", "newMessage", from);
+	protected void sendPublicMessage( AgentId from, String message ) {
+		signal("arti", "newMessage", from, message);
 	}
 	
 	/**
@@ -114,8 +114,8 @@ abstract class Community extends Artifact {
 	 * @param from Agent who sent the message
 	 * @param to Agent who will received the message
 	 */
-	protected void sendPrivateMessage( AgentId from, AgentId to ) {
-		signal(to, "arti", "newMessage", from);
+	protected void sendPrivateMessage( AgentId from, AgentId to, String message ) {
+		signal(to, "arti", "newMessage", from, message);
 	}
 	
 	/**
@@ -123,10 +123,10 @@ abstract class Community extends Artifact {
 	 * @param from Agent who sent the message
 	 * @param to Agent who will received the message
 	 */
-	protected void sendPrivateMessage( AgentId from, String to ) {
+	protected void sendPrivateMessage( AgentId from, String to, String message ) {
 		
 		AgentId toId = findFollowerByName(to );
-		signal(toId, "arti", "newMessage", from);
+		signal(toId, "arti", "newMessage", from, message);
 	}
 	
 	/**

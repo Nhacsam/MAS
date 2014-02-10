@@ -42,6 +42,16 @@ public class CommAssistantGUIWrapper extends Artifact implements ActionListener 
 		m_GUI.addNickname(Nick, Name);
 	}
 	
+	@OPERATION
+	public void receiveMessage( String Comm, String Name, String Mess ) {
+		m_GUI.receiveMessage( Comm, Name, Mess ) ;
+	}
+	
+	@OPERATION
+	public void addFollower( String Comm, String Name ) {
+		m_GUI.addFollower( Comm, Name ) ;
+	}
+	
 	
 	public void signalFollow( String Name ) {
 		signal( "gui", "follow", Name );
@@ -52,6 +62,9 @@ public class CommAssistantGUIWrapper extends Artifact implements ActionListener 
 		signal( "gui", "stopFollowing", Name );
 	}
 	
+	public void sendMessageGUI( String comm, String to, String mess ) {
+		signal( "gui", "sendMessage", to, comm, mess );
+	}
 	
 	
 	public void actionPerformed(ActionEvent e) { 

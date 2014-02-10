@@ -1,8 +1,8 @@
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.event.ActionListener;
 import java.security.InvalidParameterException;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import javax.swing.BoxLayout;
@@ -83,7 +83,7 @@ public class CommAssistantGUI extends JFrame implements TreeSelectionListener {
 	/**
 	 * Table of nicknames
 	 */
-	private Hashtable<String, String > nickNameTable ;
+	public Hashtable<String, String > nickNameTable ;
 	
 	/**
 	 * @var Parent
@@ -314,8 +314,49 @@ public class CommAssistantGUI extends JFrame implements TreeSelectionListener {
 		nickNameTable.put(Name, Nick) ;
 	}
 	
+	public void sendMessage(CommunityGUI comm, String to, String mess) {
+		
+		String toName = to ;
+		if( nickNameTable.contains(to) ) {
+			Iterator<String> ite = nickNameTable.keySet().iterator() ;
+			while( ite.hasNext() ) {
+				String key = ite.next() ;
+				if( nickNameTable.get( key) == to) {
+					toName = key ;
+					break ;
+				}
+			}
+		}
+		
+		Parent.sendMessageGUI(comm.getName(), toName, mess );
+	}
 	
+	public void receiveMessage( String Comm, String Name, String Mess ) {
+		int commIndex = communitiesList.indexOf( new CommunityGUI( Comm ) ) ;
+		if( commIndex != -1 ) {
+			CommunityGUI comm = communitiesList.get(commIndex);
+			
+			String from = Name ;
+			if( nickNameTable.containsKey(Name) )
+				from = nickNameTable.get(Name);
+			
+			comm.addMessage( from, Mess );
+		}
+	}
 	
-	
+	public void addFollower( String Comm, String Name ) {
+		
+		int commIndex = communitiesList.indexOf( new CommunityGUI( Comm ) ) ;
+		if( commIndex != -1 ) {
+			CommunityGUI comm = communitiesList.get(commIndex);
+			
+			String nick = Name ;
+			if( nickNameTable.containsKey(Name) )
+				nick = nickNameTable.get(Name);
+			
+			comm.addFollower( nick) ;
+			
+		}
+	}
 	
 }

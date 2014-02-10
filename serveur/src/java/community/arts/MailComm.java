@@ -8,8 +8,8 @@ public class MailComm extends Community{
 		super.init( "MailComm" );
 	}
 	
-	@OPERATION void mail(String to) {
-		sendPrivateMessage(getOpUserId(), to);
+	@OPERATION void mail(String to, String message) {
+		sendPrivateMessage(getOpUserId(), to, message);
 	}
 	
 }
