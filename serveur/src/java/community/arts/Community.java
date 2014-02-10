@@ -22,7 +22,12 @@ abstract class Community extends Artifact {
 	
 	protected AgentId m_owner ;
 	protected String m_type ;
-
+	
+	
+	
+	abstract void init() ;
+	
+	
 	/**
 	 * Community Initialization
 	 * @param type Community Type

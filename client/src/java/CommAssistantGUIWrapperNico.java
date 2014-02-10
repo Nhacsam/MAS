@@ -13,8 +13,8 @@ public class CommAssistantGUIWrapperNico extends Artifact {
 	
 	
 	@OPERATION
-	public void addCommunityGUI( String newComm ) {
-		m_GUI.addCommunity(newComm);
+	public void addCommunityGUI( String newComm, String Type ) {
+		m_GUI.addCommunity(newComm, Type);
 	}
 	
 	@OPERATION

@@ -158,6 +158,11 @@ public class CommAssistantGUINico extends JFrame implements TreeSelectionListene
 		globalPanel.add(communityPanel, BorderLayout.CENTER);
 		
 		
+		
+		
+		
+		
+		
 		// Post new message button 
 		JPanel forumPanel = new JPanel() ;
 		forumPanel.add( new JLabel("Post new message: "));
@@ -188,9 +193,9 @@ public class CommAssistantGUINico extends JFrame implements TreeSelectionListene
 	 * @param Name Name of the new community
 	 * @return this
 	 */
-	public CommAssistantGUINico addCommunity( String Name ) {
+	public CommAssistantGUINico addCommunity( String Name, String Type ) {
 		
-		CommunityGUI newComm = new CommunityGUI( Name ) ;
+		CommunityGUI newComm = new CommunityGUI( Name, Type ) ;
 		communitiesList.add( newComm ) ;
 		DefaultMutableTreeNode commNode = new DefaultMutableTreeNode(newComm);
 		newComm.setAssociedTreeNode(commNode);
@@ -290,6 +295,7 @@ public class CommAssistantGUINico extends JFrame implements TreeSelectionListene
 	 */
 	public void onCommunityClick( CommunityGUI c ) {
 		
+		System.out.println("test");
 		CardLayout cl = (CardLayout)(communityPanel.getLayout());
 		cl.show(communityPanel, c.toString() );
 		currentCommunity = c ;
@@ -300,7 +306,6 @@ public class CommAssistantGUINico extends JFrame implements TreeSelectionListene
 	 * @param e
 	 */
 	public void valueChanged(javax.swing.event.TreeSelectionEvent e) {
-		
 		
 		DefaultMutableTreeNode node = (DefaultMutableTreeNode) communityTree
 			.getLastSelectedPathComponent();

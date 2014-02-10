@@ -23,6 +23,11 @@ public class CommunityGUI extends JScrollPane {
 	private String name ;
 	
 	/**
+	 * @var type Type of the community
+	 */
+	private String type ;
+	
+	/**
 	 * @var followed Mak if the community is followed by the user
 	 */
 	private boolean followed ;
@@ -35,18 +40,41 @@ public class CommunityGUI extends JScrollPane {
 	
 	private JPanel globalPanel ;
 	
+	
 	/**
 	 * Constructor
 	 * @param name Name of the community
 	 */
 	public CommunityGUI(String name) {
 		this.name = name ;
-		constructPanel() ;
 	}
 	
 	
+	/**
+	 * Constructor
+	 * @param name Name of the community
+	 * @param type Type of community
+	 */
+	public CommunityGUI(String name, String type) {
+		this.name = name ;
+		this.type = type ;
+		
+		if( type ==  "ForumComm"  )
+			constructForumPanel() ;
+		else
+			constructMailPanel() ;
+	}
+	
+	
+	public void constructForumPanel() {
+		
+	}
+	
+	
+	
+	
 
-	public void constructPanel() {
+	public void constructMailPanel() {
 		
 		globalPanel = new JPanel () ;
 		globalPanel.setLayout(new BoxLayout(globalPanel,BoxLayout. Y_AXIS));
@@ -68,8 +96,21 @@ public class CommunityGUI extends JScrollPane {
 		
 	}
 	
-	
 	public CommunityGUI addMessage( String from, String msg ) {
+		if( type ==  "ForumComm"  )
+			addForumMessage(from, msg) ;
+		else
+			addMailMessage(from, msg) ;
+		
+		return this ;
+	}
+	
+	
+	
+	
+	
+	
+	public void addMailMessage( String from, String msg ) {
 		
 		JPanel messagePannel = new JPanel();
 		messagePannel.setLayout(new BorderLayout());
@@ -83,11 +124,12 @@ public class CommunityGUI extends JScrollPane {
 		
 		globalPanel.add( messagePannel ) ;
 		
-		return this ;
 	}
 	
 	
-	
+	public void addForumMessage(String from, String msg) {
+		
+	}
 	
 	
 	

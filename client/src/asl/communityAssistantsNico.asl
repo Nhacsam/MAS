@@ -40,7 +40,7 @@ maxNumberOfFollowedCommunities( 10 ).
 	.concat( "Community knowed : ", LC, "  Communities Followed : ", LF, Text);
 	//.print(Text);
 	
-	.wait(1000);
+	.wait(5000);
 	!handleCommunity.
 
 
@@ -72,9 +72,9 @@ maxNumberOfFollowedCommunities( 10 ).
 
 
 
-+!userCallbackNew( CommName ) : .my_name( Name ) & guiId( GUIID) <-
++!userCallbackNew( CommName, Type ) : .my_name( Name ) & guiId( GUIID) <-
 	.concat("New Comm ", CommName, Text ); .print(Text);
-	addCommunityGUI(CommName) [artifact_id( GUIID )].
+	addCommunityGUI(CommName, Type) [artifact_id( GUIID )].
 
 +!userCallbackFollow( CommName ) : .my_name( Name ) & guiId( GUIID) <-
 	.concat("Try to follow ", CommName, Text ); .print(Text);

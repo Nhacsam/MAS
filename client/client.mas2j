@@ -4,7 +4,7 @@ MAS projetmasbis {
 
 	agents:
 		communityAssistantsNico agentArchClass c4jason.CAgentArch #5;
-		aThami communityAssistantThami agentArchClass c4jason.CAgentArch;
+		// aThami communityAssistantThami agentArchClass c4jason.CAgentArch;
 
 	aslSourcePath:
 		"src/asl";

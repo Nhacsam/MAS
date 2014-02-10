@@ -35,7 +35,7 @@ contains([_|L],X):- contains(L,X).
  */
 +!createCommunity( Name, Type ) : createdCommunity(Comms)  <-
 	!userCallbackCreate( Name, Type );
-	makeArtifact(Name, Type ,[Type], C);
+	makeArtifact(Name, Type ,[] ,C );
 	
 	.concat( [Name], Comms, Added );
 	-+createdCommunity( Added );
@@ -141,12 +141,17 @@ contains([_|L],X):- contains(L,X).
 /**
  * Add new community in belief base
  */
-+!addnewCommunity( ComId) : communities(Comms)<-
-	!userCallbackNew( ComId );
-	.concat( [ComId], Comms, Added );
++!addnewCommunity( Name) : communities(Comms)<-
+	
+	lookupArtifact( Name, Id);
+	getType(Type) [artifact_id(Id)];
+	
+	
+	!userCallbackNew( Name, Type );
+	.concat( [Name], Comms, Added );
 	-+communities( Added ).
 
--!userCallbackNew( Name ).
+-!userCallbackNew( Name, Type ).
 
 
 
