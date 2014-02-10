@@ -20,9 +20,8 @@ abstract class Community extends Artifact {
 	protected LinkedList<AgentId> m_followers ;
 	
 	protected AgentId m_owner ;
-	
 	protected String m_type ;
-	
+
 	/**
 	 * Community Initialization
 	 * @param type Community Type
@@ -50,6 +49,7 @@ abstract class Community extends Artifact {
 			m_followers.add( src );
 		
 		signal( "arti", "newFollower", src );
+
 	}
 	
 	
