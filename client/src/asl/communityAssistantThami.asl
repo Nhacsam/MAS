@@ -22,7 +22,6 @@ maxNumberOfFollowedCommunities( 10 ).
 	!handleCommunity.
 
 
-
 +!joinWork: true <- joinRemoteWorkspace("server","localhost",WspID2).
 -!joinWork: true <- .wait(10); !joinWork.
 
