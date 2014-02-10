@@ -34,14 +34,12 @@ maxNumberOfFollowedCommunities( 10 ).
 	.length(F, LF );
 	!agentAction(Rand, LF);
 	
-	//!createCommunity(A);
-	
 	.length(C, LC );
 	.length(F, LF );
 	.concat( "Community knowed : ", LC, "  Communities Followed : ", LF, Text);
-	.print(Text);
+	//.print(Text);
 	
-	.wait(10000);
+	.wait(1000);
 	!handleCommunity.
 
 
@@ -72,20 +70,47 @@ maxNumberOfFollowedCommunities( 10 ).
 +!agentAction( Rand, LF ).
 
 
++!followCommunityNico( C ) : .my_name( Name ) <-
+	!followCommunity( C );
+	lookupArtifact( Name, Id);
+	.concat("Try to follow ", C, Text ); .print(Text);
+	followCommunityGUI( C ) [ artifact_id( Id )]
+	.
 
 
 
 
-// Crate a new community if we try de follow a community which not exist
-+!followCommunity( R ) <-
-	!createCommunity( S );
-	!followCommunity( S ).
++!userCallbackNew( CommName ) : .my_name( Name ) <-
+	.concat("New Comm ", CommName, Text ); .print(Text);
+	lookupArtifact( Name, Id);
+	addCommunityGUI(CommName) [artifact_id( Id )].
+
+
++!userCallbackCreate( CommName ) : .my_name( Name ) <-
+	.concat("Create Comm ", CommName, Text ); .print(Text);
+	lookupArtifact( Name, Id);
+	addCommunityGUI(CommName) [artifact_id( Id )].
+
++!userCallbackFollow( CommName ) : .my_name( Name ) <-
+	.concat("Try to follow ", CommName, Text ); .print(Text);
+	lookupArtifact( Name, Id);
+	followCommunityGUI( CommName ) [ artifact_id( Id )].
+	
++!userCallbackStopFollowing( CommName ) : .my_name( Name ) <-
+	.concat("Stop follow ", CommName, Text ); .print(Text);
+	lookupArtifact( Name, Id);
+	stopFollowingCommunityGUI( CommName ) [ artifact_id( Id )].
 
 
 
 /* Events */
 
++newCommunity( ComId)[source(S)]<- 
+	!addnewCommunity( ComId ) .
+
+
+
 
 +newFollower(ArtiName, Name)  <- .concat("New follower ", Name, Text ); .print(Text).
 +followerLeave(Name) <- .concat("Follower Leave ", Name, Text ); .print(Text).
-+newCommunity( ComId)[source(S)] <- !addnewCommunity( ComId ) .
+

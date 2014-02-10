@@ -1,8 +1,13 @@
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.LayoutManager;
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
@@ -10,7 +15,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
  * And display its
  * @author nikkidbz
  */
-public class CommunityGUI extends JPanel {
+public class CommunityGUI extends JScrollPane {
 	
 	/**
 	 * @var name Name of the community
@@ -28,6 +33,8 @@ public class CommunityGUI extends JPanel {
 	private DefaultMutableTreeNode associedTreeNode = null ;
 	
 	
+	private JPanel globalPanel ;
+	
 	/**
 	 * Constructor
 	 * @param name Name of the community
@@ -36,56 +43,48 @@ public class CommunityGUI extends JPanel {
 		this.name = name ;
 		constructPanel() ;
 	}
-
-	/**
-	 * Constructor
-	 * @param name Name of the community
-	 * @param layout
-	 */
-	public CommunityGUI(String name, LayoutManager layout) {
-		super(layout);
-		this.name = name ;
-		constructPanel() ;
-	}
-
-	/**
-	 * Constructor
-	 * @param name Name of the community
-	 * @param isDoubleBuffered
-	 */
-	public CommunityGUI(String name, boolean isDoubleBuffered) {
-		super(isDoubleBuffered);
-		this.name = name ;
-		constructPanel() ;
-	}
-
-	/**
-	 * Constructor
-	 * @param name Name of the community
-	 * @param layout
-	 * @param isDoubleBuffered
-	 */
-	public CommunityGUI(String name, LayoutManager layout, boolean isDoubleBuffered) {
-		super(layout, isDoubleBuffered);
-		this.name = name ;
-		constructPanel() ;
-	}
-	
 	
 	
 
 	public void constructPanel() {
 		
-		setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+		globalPanel = new JPanel () ;
+		globalPanel.setLayout(new BoxLayout(globalPanel,BoxLayout. Y_AXIS));
+		add(globalPanel ) ;
 		
-		add( new JLabel(name) ) ;
+		JLabel nameLabel = new JLabel(name) ;
+		nameLabel.setFont( new Font( "Serif", Font.PLAIN, 30 ) );
+		
+		globalPanel.add( nameLabel ) ;
+		
+		/*
+		
+		JButton newMessage = new JButton( "Write") ;
+		globalPanel.add( newMessage ) ;
 		
 		
+		addMessage("toto", "iqsdh oisqh oif hdoih sdopi fpiosd fiopsd hoi dspoif hopisd fopis doif soif posdi hfpoisdp piof dpoif dspoi hfposid hfpoisd hfpoidsh iofsd oisfd poifsd poifsd pofsdi pfosdi posid fsdoi hpofsdi hposdfi dfspoi fdspoi hfdpo hfsdpoi hfdspoi h" );
+		*/
 		
 	}
 	
 	
-	
+	public CommunityGUI addMessage( String from, String msg ) {
+		
+		JPanel messagePannel = new JPanel();
+		messagePannel.setLayout(new BorderLayout());
+		
+		JLabel fromLabel = new JLabel( "Message from " + from );
+		fromLabel.setForeground(new Color( 255, 0, 0));
+		messagePannel.add(fromLabel,BorderLayout.NORTH );
+		
+		JLabel message = new JLabel(msg );
+		messagePannel.add(message,BorderLayout.CENTER );
+		
+		globalPanel.add( messagePannel ) ;
+		
+		return this ;
+	}
 	
 	
 	

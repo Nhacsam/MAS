@@ -33,13 +33,17 @@ contains([_|L],X):- contains(L,X).
  * @param Name Return the community Name
  */
 +!createCommunity( Name ) <-
+	!userCallbackCreate( Name );
 	.send( "communityServer", tell, create(Name) ).
+
+-!userCallbackCreate( Name ).
 
 /**
  * Follow a community
  * @param Name Name of the community to follow
  */
 +!followCommunity( Name ) : .string(Name) & communities(Comms) & followedCommunity ( FollowedComms ) <-
+	!userCallbackFollow( Name );
 	.send( "communityServer", tell, follow(Name) );
 	
 	.concat(FollowedComms, [C], Added );
@@ -49,17 +53,24 @@ contains([_|L],X):- contains(L,X).
 	-+communities( Deleted )
 .
 
+// Crate a new community if we try de follow a community which not exist
++!followCommunity( R ) : .my_name( Name )  <-
+	.random(RandName);
+	.concat("", RandName, R );
+	!createCommunity( R );
+	!followCommunityNico( R ).
+	
 -!followCommunity( R ).
 
 
-
+-!userCallbackFollow( Name ).
 
 
 /**
  * Stop following a Community
  */
 +!stopfollowingCommunity( Name ) : .string( Name ) & communities(Comms) & followedCommunity ( FollowedComms )  <-
-	
+	!userCallbackStopFollowing( Name );
 	.send( "communityServer", tell, stopfollowing(Name) );
 	
 	.concat(Comms, [C], Added );
@@ -70,6 +81,8 @@ contains([_|L],X):- contains(L,X).
 	.
 +!stopfollowingCommunity( R ).
 -!stopfollowingCommunity( R ).
+
+-!userCallbackStopFollowing( Name ).
 
 
 
@@ -90,6 +103,8 @@ contains([_|L],X):- contains(L,X).
  * Add new community in belief base
  */
 +!addnewCommunity( ComId) : communities(Comms)<-
+	!userCallbackNew( ComId );
 	.concat( [ComId], Comms, Added );
 	-+communities( Added ).
 
+-!userCallbackNew( Name ).
