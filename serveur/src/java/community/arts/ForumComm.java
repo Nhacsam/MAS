@@ -38,6 +38,19 @@ public class ForumComm extends Community{
 		}
 	}
 	
+	@OPERATION String readNewsBy2(String agentName){
+		ListIterator<ArrayList<String>> ite = news.listIterator(0);
+		ArrayList<String> cur;
+		String result;
+		result = "List of "+agentName+" posts :\n";
+		while( ite.hasNext() ) {
+			cur = ite.next();
+			if(cur.contains(agentName))
+				result= cur.get(1) + "\n";
+		}
+		return result;
+	}
+	
 	@OPERATION void readAllNews(){
 		ListIterator<ArrayList<String>> ite = news.listIterator(0);
 		ArrayList<String> cur;
@@ -47,5 +60,15 @@ public class ForumComm extends Community{
 		}
 	}
 	
+	@OPERATION String readAllNews2(){
+		ListIterator<ArrayList<String>> ite = news.listIterator(0);
+		ArrayList<String> cur;
+		String result = "";
+		while( ite.hasNext() ) {
+			cur = ite.next();
+			result += cur.get(0) +" posted : "+ cur.get(1)+ "\n";
+		}
+		return result;
+	}
 	
 }
