@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.ListIterator;
 
 import cartago.OPERATION;
+import cartago.OpFeedbackParam;
 
 public class ForumComm extends Community{
 	
@@ -15,6 +16,10 @@ public class ForumComm extends Community{
 		System.out.println("Forum Community Server Ready");
 	}
 	
+	/**
+	 * Allo a user to post a new message in the community
+	 * @param new_post contains the message that he wants to post
+	 */
 	@OPERATION void post(String new_post){
 		String agentName = this.getOpUserName();
 		if(m_followers.contains(agentName)){
@@ -27,6 +32,7 @@ public class ForumComm extends Community{
 			System.out.println("You need to be a follower to be able to post in this Forum Community.");
 	}
 	
+	
 	@OPERATION void readNewsBy(String agentName){
 		ListIterator<ArrayList<String>> ite = news.listIterator(0);
 		ArrayList<String> cur;
@@ -38,17 +44,22 @@ public class ForumComm extends Community{
 		}
 	}
 	
-	@OPERATION String readNewsBy2(String agentName){
+	/**
+	 * Get all the messages posted by the agent 'agentNam' in the community
+	 * @param agentName the name of the agent we want to see the messages of
+	 * @param result Return all the messages of that agent in the current community
+	 */
+	@OPERATION void readNewsBy2(String agentName, OpFeedbackParam<String> result){
 		ListIterator<ArrayList<String>> ite = news.listIterator(0);
 		ArrayList<String> cur;
-		String result;
-		result = "List of "+agentName+" posts :\n";
+		String temp;
+		temp = "List of "+agentName+" posts :\n";
 		while( ite.hasNext() ) {
 			cur = ite.next();
 			if(cur.contains(agentName))
-				result= cur.get(1) + "\n";
+				temp= cur.get(1) + "\n";
 		}
-		return result;
+		result.set(temp);
 	}
 	
 	@OPERATION void readAllNews(){
@@ -60,15 +71,19 @@ public class ForumComm extends Community{
 		}
 	}
 	
-	@OPERATION String readAllNews2(){
+	/**
+	 * Get all the messages posted in the community
+	 * @param result Return all the messages in the current community
+	 */
+	@OPERATION void readAllNews2(OpFeedbackParam<String> result){
 		ListIterator<ArrayList<String>> ite = news.listIterator(0);
 		ArrayList<String> cur;
-		String result = "";
+		String temp = "";
 		while( ite.hasNext() ) {
 			cur = ite.next();
-			result += cur.get(0) +" posted : "+ cur.get(1)+ "\n";
+			temp += cur.get(0) +" posted : "+ cur.get(1)+ "\n";
 		}
-		return result;
+		result.set(temp);
 	}
 	
 }
