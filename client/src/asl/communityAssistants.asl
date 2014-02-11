@@ -96,9 +96,10 @@ maxNumberOfFollowedCommunities( 10 ).
 +gui( "follow", Name ) <- !followCommunity( Name ).
 +gui( "stopFollowing", Name ) <- .print(Name); !stopfollowingCommunity( Name ).
 
-+gui( "sendMessage", To, Comm, Mess ) : my_name(Name) <- .send(To, tell, newMessage( Comm, Name, Mess ) ).
-+newMessage( Comm, Name, Mess ) : guiId( GUIID) <- receiveMessage( Comm, Name, Mess )[ artifact_id( GUIID )].
++gui( "sendMessage", To, Comm, Mess ) : my_name(Name) <- mail(To, Mess)[artifact_name(Comm)].
 
-+newFollower(ArtiName, Name)  <- .concat("New follower ", Name, Text ); .print(Text).
-+followerLeave(Name) <- .concat("Follower Leave ", Name, Text ); .print(Text).
++arti( "newMessage", From, Mess )[artifact_name(Id,Comm)] : guiId( GUIID) 
+	<- receiveMessage( Comm, From, Mess )[ artifact_id( GUIID )].
 
++arti( "newFollower", Name)[artifact_name(Id,Comm)] : guiId( GUIID)
+	<- addFollower( Comm, Name )[ artifact_id( GUIID )].
