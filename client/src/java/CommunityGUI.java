@@ -185,10 +185,6 @@ public class CommunityGUI extends JPanel  implements ActionListener {
 		scrollPane.setPreferredSize( new Dimension(500, 400) );
 		globalPanel.add( scrollPane ) ;
 		
-		
-		addMessage("toto", "iqsdh oisqh oif hdoih sdopi fpiosd fiopsd hoi" );
-		addMessage("toto", "iqsdh oisqh oif hdoih sdopi fpiosd fiopsd hoi" );
-		addMessage("toto", "iqsdh oisqh oif hdoih sdopi fpiosd fiopsd hoi" );
 	}
 	
 	public CommunityGUI addMessage( String from, String msg ) {
@@ -257,7 +253,7 @@ public class CommunityGUI extends JPanel  implements ActionListener {
 	private String getMessageToDialog() {
 		
 		String[] followersArray = {} ;
-		followers.toArray( followersArray ) ;
+		followersArray = followers.toArray( followersArray ) ;
 		
 		return (String) JOptionPane.showInputDialog(this,
                 "Send a message",

@@ -54,7 +54,7 @@ abstract class Community extends Artifact {
 		if(!m_followers.contains(src))
 			m_followers.add( src );
 		
-		signal( "arti", "newFollower", src );
+		signal( "arti", "newFollower", src.getAgentName() );
 
 	}
 	

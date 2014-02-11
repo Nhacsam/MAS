@@ -58,7 +58,6 @@ public class CommAssistantGUIWrapper extends Artifact implements ActionListener 
 	}
 	
 	public void signalStopFollowing( String Name ) {
-		System.out.println(Name);
 		signal( "gui", "stopFollowing", Name );
 	}
 	
